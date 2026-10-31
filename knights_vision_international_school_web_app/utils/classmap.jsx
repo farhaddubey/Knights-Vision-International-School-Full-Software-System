@@ -1,0 +1,20 @@
+const classMap = {
+  'lkg':     { id: 1,  name: 'LKG' },
+  'ukg':     { id: 2,  name: 'UKG' },
+  'i':       { id: 3,  name: 'I' },
+  'ii':      { id: 4,  name: 'II' },
+  'iii':     { id: 5,  name: 'III' },
+  'iv':      { id: 6,  name: 'IV' },
+  'v':       { id: 7,  name: 'V' },
+  'vi':      { id: 8,  name: 'VI' },
+  'vii':     { id: 9,  name: 'VII' },
+  'viii':    { id: 10, name: 'VIII' },
+  'ix':      { id: 11, name: 'IX' },
+  'x':       { id: 12, name: 'X' },
+  'xs':      { id: 13, name: 'XS' },
+  'xi':      { id: 14,  name:'XI'},
+  'xii':     { id: 15,  name:'XII'},
+  'xiis':    { id: 16,  name:'XIIS'},
+  'xiiij':   { id: 16,  name:'XIIIJ'},
+};
+export default classMap; 

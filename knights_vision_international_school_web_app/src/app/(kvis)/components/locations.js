@@ -1,0 +1,36 @@
+// locations.js
+
+export const statesWithCities = {
+    "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane", "Aurangabad", "Solapur", "Kolhapur", "Amravati", "Jalgaon"],
+    "Karnataka": ["Bengaluru", "Mysore", "Mangalore", "Hubli", "Belgaum", "Davanagere", "Ballari", "Shimoga", "Tumkur", "Bijapur"],
+    "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem", "Tiruchirappalli", "Tiruppur", "Erode", "Vellore", "Thoothukudi", "Dindigul"],
+    "Uttar Pradesh": ["Lucknow", "Kanpur", "Ghaziabad", "Agra", "Meerut", "Varanasi", "Allahabad", "Bareilly", "Moradabad", "Aligarh"],
+    "West Bengal": ["Malda", "Kolkata", "Howrah", "Durgapur", "Asansol", "Siliguri", "Bardhaman", "Kharagpur", "Darjeeling", "Haldia", "Jalpaiguri"],
+    "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar", "Jamnagar", "Junagadh", "Gandhinagar", "Anand", "Navsari"],
+    "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer", "Bikaner", "Alwar", "Bhilwara", "Bharatpur", "Sri Ganganagar"],
+    "Madhya Pradesh": ["Indore", "Bhopal", "Jabalpur", "Gwalior", "Ujjain", "Sagar", "Dewas", "Satna", "Ratlam", "Rewa"],
+    "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia", "Darbhanga", "Bihar Sharif", "Ara", "Begusarai", "Katihar"],
+    "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool", "Rajahmundry", "Tirupati", "Kadapa", "Anantapur", "Vizianagaram"],
+    "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Brahmapur", "Sambalpur", "Balasore", "Puri", "Baripada", "Bhadrak", "Jharsuguda"],
+    "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda", "Hoshiarpur", "Mohali", "Pathankot", "Moga", "Batala"],
+    "Haryana": ["Gurgaon", "Faridabad", "Panipat", "Ambala", "Yamunanagar", "Rohtak", "Hisar", "Karnal", "Sonipat", "Panchkula"],
+    "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba", "Durg", "Raigarh", "Rajnandgaon", "Jagdalpur", "Ambikapur", "Dhamtari"],
+    "Jharkhand": ["Ranchi", "Dhanbad", "Jamshedpur", "Bokaro", "Deoghar", "Hazaribagh", "Giridih", "Ramgarh", "Medininagar", "Chaibasa"],
+    "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Khammam", "Karimnagar", "Ramagundam", "Mahbubnagar", "Nalgonda", "Adilabad", "Suryapet"],
+    "Assam": ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Nagaon", "Tinsukia", "Tezpur", "Bongaigaon", "Dhubri", "Diphu"],
+    "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Kollam", "Thrissur", "Palakkad", "Alappuzha", "Malappuram", "Kannur", "Kottayam"],
+    "Uttarakhand": ["Dehradun", "Haridwar", "Roorkee", "Haldwani", "Rudrapur", "Kashipur", "Rishikesh", "Pithoragarh", "Nainital", "Mussoorie"],
+    "Himachal Pradesh": ["Shimla", "Dharamshala", "Solan", "Mandi", "Palampur", "Baddi", "Nahan", "Una", "Bilaspur", "Chamba"],
+    "Jammu and Kashmir": ["Srinagar", "Jammu", "Anantnag", "Baramulla", "Udhampur", "Sopore", "Kathua", "Poonch", "Rajouri", "Pulwama"],
+    "Goa": ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda", "Bicholim", "Curchorem", "Canacona", "Sanquelim", "Valpoi"],
+    "Tripura": ["Agartala", "Udaipur", "Kailashahar", "Dharmanagar", "Badharghat", "Ambassa", "Belonia", "Pratapgarh", "Kamalpur", "Sonamura"],
+    "Manipur": ["Imphal", "Thoubal", "Kakching", "Ukhrul", "Bishnupur", "Senapati", "Churachandpur", "Moreh", "Nambol", "Yairipok"],
+    "Meghalaya": ["Shillong", "Tura", "Nongstoin", "Jowai", "Baghmara", "Williamnagar", "Mairang", "Cherrapunji", "Mawlai", "Resubelpara"],
+    "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Wokha", "Zunheboto", "Tuensang", "Mon", "Phek", "Kiphire", "Longleng"],
+    "Mizoram": ["Aizawl", "Lunglei", "Serchhip", "Champhai", "Kolasib", "Lawngtlai", "Mamit", "Saiha", "Biate", "Tlabung"],
+    "Sikkim": ["Gangtok", "Namchi", "Geyzing", "Mangan", "Rangpo", "Ravangla", "Singtam", "Jorethang", "Soreng", "Yuksom"],
+    "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Pasighat", "Tawang", "Ziro", "Bomdila", "Aalo", "Tezu", "Roing", "Namsai"],
+    "Andaman and Nicobar Islands": ["Port Blair", "Diglipur", "Car Nicobar", "Nancowry", "Rangat", "Mayabunder", "Billyground", "Campbell Bay", "Hut Bay", "Little Andaman"],
+    "Lakshadweep": ["Kavaratti", "Agatti", "Amini", "Andrott", "Kalpeni", "Minicoy", "Kadmat", "Chetlat", "Bitra", "Kiltan"]
+  };
+  

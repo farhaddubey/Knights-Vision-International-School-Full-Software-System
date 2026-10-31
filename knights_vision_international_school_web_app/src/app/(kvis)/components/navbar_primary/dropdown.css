@@ -1,0 +1,92 @@
+/* src/app/components/WikiTools.css */
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Increase specificity to override .css-15h4t6o */
+.dropdown .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: black !important; /* Override .css-15h4t6o’s white background */
+  z-index: 1;
+  min-width: 300px; /* Adjusted for smaller screens */
+  max-width: 300px; /* Max width for larger screens */
+  border-radius: 16px !important; /* Override .css-15h4t6o’s 4px */
+  top: 100% !important; /* Position below the icon */
+  left: 50% !important; /* Align left edge to center of icon */
+  transform: translateX(-50%) !important; /* Center horizontally */
+  margin-top: -20px !important; /* Gap between icon and dropdown */
+  padding: 8px !important; /* Unified padding, override .css-15h4t6o */
+  box-shadow: none !important; /* Remove .css-15h4t6o’s box-shadow */
+}
+
+.dropdown-content a {
+  color: #b9b9b9;
+  padding: 5px 0;
+  text-decoration: none;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+.dropdown-content a:hover {
+  background-color: #000000;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block !important; /* Override any conflicting display rules */
+}
+
+/* Override .css-15h4t6o for consistency */
+.css-15h4t6o {
+  display: none !important; /* Ensure hidden by default */
+  position: absolute;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  margin-top: 8px !important;
+  z-index: 1;
+  flex-wrap: wrap;
+  max-width: 600px; /* Match .dropdown-content */
+  background-color: black !important; /* Match .dropdown-content */
+  border-radius: 16px !important;
+  padding: 8px !important;
+  box-shadow: none !important;
+}
+
+.css-15h4t6o:hover {
+  display: block !important;
+}
+
+@media (max-width: 600px) {
+  .dropdown .dropdown-content {
+    min-width: 100%; /* Full width on small screens */
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* True centering */
+    margin-top: 8px !important;
+    box-shadow: none !important;
+  }
+  .css-15h4t6o {
+    min-width: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    margin-top: 8px !important;
+  }
+}
+
+@media (min-width: 900px) {
+  .dropdown .dropdown-content {
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* Consistent centering */
+    margin-top: 8px !important;
+    box-shadow: none !important;
+  }
+  .css-15h4t6o {
+    left: 50% !important;
+    right: auto !important; /* Override right: 30px */
+    transform: translateX(-50%) !important; /* Override transform: none */
+    margin-top: 8px !important;
+  }
+}

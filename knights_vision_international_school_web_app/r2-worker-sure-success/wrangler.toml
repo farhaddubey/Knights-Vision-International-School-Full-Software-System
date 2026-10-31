@@ -1,0 +1,11 @@
+name = "r2-worker-sure-success"
+main = "src/index.js"
+compatibility_date = "2025-07-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+AUTH_KEY_SECRET = "my-secure-key-123"
+
+[[r2_buckets]]
+binding = "SURE_SUCCESS_POINT_SCHOOL"
+bucket_name = "sure-success-point-school"

@@ -1,0 +1,3704 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum AppStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  INTERVIEW_SCHEDULED
+  APPROVED
+  REJECTED
+}
+
+enum Role {
+  CLIENT
+  EXECUTIVE
+  INTERN
+  DISTRICT_MANAGER
+  STATE_HEAD
+  ADMIN
+  HOD
+  TEACHER
+  PRINCIPAL
+}
+
+enum Weekday {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+  SUN
+}
+
+enum Semester {
+  FIRST
+  SECOND
+  THIRD
+}
+
+// Models
+model Country {
+  id           Int         @id @default(autoincrement())
+  name         String      @db.VarChar(100)
+  slug         String      @unique @db.VarChar(100)
+  code         String      @unique @db.VarChar(2)
+  currencyId   Int
+  timezoneId   Int
+  contactInfo  String?     @db.VarChar(255)
+  translations Json?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  states       State[]
+  analytics    Analytics[]
+  tax          Tax[]
+  schools      School[]
+  guardians    Guardian[]
+}
+
+model State {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(100)
+  slug        String      @unique
+  code        String      @unique
+  countryId   Int
+  headId      Int?
+  contactInfo String?     @db.VarChar(255)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  country     Country     @relation(fields: [countryId], references: [id])
+  districts   District[]
+  analytics   Analytics[]
+  schools     School[]
+  head        User?       @relation(fields: [headId], references: [id])
+  guardians   Guardian[]
+}
+
+model District {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(100)
+  slug        String       @unique @db.VarChar(100)
+  stateId     Int
+  managerId   Int?
+  contactInfo String?      @db.VarChar(255)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  state       State        @relation(fields: [stateId], references: [id])
+  manager     User?        @relation(fields: [managerId], references: [id])
+  guardians   Guardian[]
+  analytics   Analytics[]
+  teamMembers TeamMember[]
+  schools     School[]
+}
+
+enum CenterType {
+  HQ
+  LOCAL
+  DISTRICT
+  STATE
+  COUNTRY
+  GLOBAL_PARTNER
+  PRIVATE_PARTNER
+  FRANCHISE
+  REGIONAL
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  INACTIVE_WITH_DUE
+  TRANSFERRED
+}
+
+// A student's permanent profile is deliberately separate from their yearly
+// placement.  The legacy Student.classId remains the current operational class
+// for existing panels, while StudentEnrollment preserves every session.
+enum StudentEnrollmentStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  COMPLETED
+  LEFT
+  TRANSFER_REQUESTED
+  TRANSFERRED
+}
+
+enum StudentEnrollmentDecision {
+  NEW_ADMISSION
+  PROMOTED
+  REPEATED
+  RETURNING
+}
+
+enum LifecycleFeeKind {
+  MONTHLY_TUITION
+  NEW_ADMISSION
+  READMISSION
+}
+
+enum TransferCertificateRequestStatus {
+  REQUESTED
+  RETURNED_FOR_CLARIFICATION
+  PRINCIPAL_APPROVED
+  PRINCIPAL_REJECTED
+  FINANCE_CLEARED
+  FINANCE_PENDING_RECONCILIATION
+  ISSUED
+  CANCELLED
+}
+
+enum TransferCertificateReason {
+  FAMILY_RELOCATION
+  FINANCIAL_DIFFICULTIES
+  ACADEMIC_CONCERNS
+  STUDENT_BEHAVIOUR
+  BULLYING_OR_SAFETY
+  TEACHER_OR_STAFF_COMPLAINT
+  SCHOOL_MANAGEMENT_CONCERN
+  PERSONAL_REASONS
+  OTHER
+}
+
+model School {
+  id                     Int              @id @default(autoincrement())
+  name                   String           @db.VarChar(100) // e.g., "S S Point School"
+  slug                   String?          @unique @db.VarChar(100)
+  description            String?          @db.VarChar(500)
+  type                   CenterType       @default(LOCAL)
+  logoUrl                String?          @db.VarChar(300)
+  coverImageUrl          String?          @db.VarChar(300)
+  youtubeUrl             String?          @db.VarChar(300)
+  city                   String?          @db.VarChar(100)
+  districtId             Int?
+  stateId                Int?
+  countryId              Int?
+  address                String           @db.VarChar(255)
+  landmark               String?          @db.VarChar(150)
+  postalCode             String?          @db.VarChar(20)
+  latitude               Float?
+  longitude              Float?
+  mapUrl                 String?          @db.VarChar(300)
+  geoFenceArea           Json?
+  phoneCode              String?          @db.VarChar(10)
+  phoneNumber            String?          @db.VarChar(20)
+  receptionistName       String?          @db.VarChar(100)
+  receptionistContact    String?          @db.VarChar(100)
+  contactInfo            String?          @db.VarChar(255)
+  email                  String?          @db.VarChar(255)
+  websiteUrl             String?          @db.VarChar(255)
+  socialLinks            Json?
+  languagesSpoken        String[]
+  registrationNumber     String?          @db.VarChar(100)
+  legalEntityName        String?          @db.VarChar(200)
+  taxId                  String?          @db.VarChar(100)
+  complianceCertificates Json?
+  isVerified             Boolean          @default(false)
+  isOperational          Boolean          @default(true)
+  userRatingsCount       Int              @default(0)
+  avgRatingScore         Float            @default(0.0)
+  testimonials           Json?
+  bookingUrl             String?          @db.VarChar(255)
+  acceptsWalkins         Boolean          @default(true)
+  avgWaitTimeMinutes     Int?
+  appointmentPolicy      String?          @db.VarChar(255)
+  specializations        String[]
+  mostPopularServices    String[]
+  hasFreeConsultation    Boolean          @default(false)
+  offersHomeVisit        Boolean          @default(false)
+  parentCenterId         Int?
+  parentCenter           School?          @relation("Franchise", fields: [parentCenterId], references: [id])
+  franchisees            School[]         @relation("Franchise")
+  regionManagerId        Int?
+  isFranchise            Boolean          @default(false)
+  franchiseInfo          String?          @db.VarChar(255)
+  aiSupportEnabled       Boolean          @default(false)
+  aiSupportUrl           String?          @db.VarChar(255)
+  liveChatSupport        Boolean          @default(false)
+  liveChatHours          Json?
+  country                Country?         @relation(fields: [countryId], references: [id])
+  state                  State?           @relation(fields: [stateId], references: [id])
+  district               District?        @relation(fields: [districtId], references: [id])
+  operatingHours         OperatingHours[]
+  branches               SchoolBranch[]
+  departments            Department[]
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  SchoolEnquiry          SchoolEnquiry[]
+
+  User User[]
+
+  ImprovementSuggestion ImprovementSuggestion[]
+  schoolConcerns        SchoolConcern[]
+  operationalRequests   OperationalRequest[]
+  policyExceptions      PolicyException[]
+  mediaEvidence         SchoolMediaEvidence[]   @relation("SchoolMediaEvidenceSchool")
+
+  ClassSubject ClassSubject[]
+
+  organizationProfile OrganizationProfile? @relation("OrganizationProfileSchool")
+  depots              Depot[]
+  fleetVehicles       FleetVehicle[]
+}
+
+model SchoolBranch {
+  id                       Int                        @id @default(autoincrement())
+  school                   School                     @relation(fields: [schoolId], references: [id])
+  schoolId                 Int
+  name                     String                     @db.VarChar(100)
+  code                     String                     @unique @db.VarChar(20)
+  slug                     String                     @unique @db.VarChar(50)
+  address                  String?
+  roomNumber               String?                    @db.VarChar(50)
+  classes                  SchoolClass[]
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  Student                  Student[]
+  Admission                Admission[]
+  BranchRoleAssignment     BranchRoleAssignment[]
+  AdmissionTestApplication AdmissionTestApplication[]
+  AdmissionTest            AdmissionTest[]            @relation("AdmissionTestBranch")
+
+  Room Room[]
+
+  PrayerOathAssignment PrayerOathAssignment[]
+
+  User User[]
+
+  ImprovementSuggestion ImprovementSuggestion[]
+  schoolConcerns        SchoolConcern[]
+  operationalRequests   OperationalRequest[]
+  policyExceptions      PolicyException[]
+  mediaEvidence         SchoolMediaEvidence[]   @relation("SchoolMediaEvidenceBranch")
+
+  ClassSubject ClassSubject[]
+
+  enterpriseBranchScope EnterpriseBranchScope? @relation("EnterpriseBranchScopeBranch")
+  depots                Depot[]
+  fleetVehicles         FleetVehicle[]
+}
+
+model Room {
+  id                  Int                        @id @default(autoincrement())
+  branch              SchoolBranch               @relation(fields: [branchId], references: [id])
+  branchId            Int
+  schoolId            Int
+  roomNumber          String                     @unique @db.VarChar(50) // e.g., "R-101"
+  capacity            Int // max students
+  floor               String?                    @db.VarChar(20)
+  type                String?                    @db.VarChar(30) // optional: "Exam Hall", "Classroom"
+  supervisor          String?                    @db.VarChar(100)
+  createdAt           DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
+  seatingApplications AdmissionTestApplication[]
+}
+
+model Subject {
+  id            Int            @id @default(autoincrement())
+  name          String         @db.VarChar(50) // e.g., "Mathematics", "Science"
+  description   String?        @db.Text
+  slug          String         @unique @db.VarChar(50)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  classSubjects ClassSubject[]
+}
+
+model SchoolClass {
+  id                         Int                          @id @default(autoincrement())
+  branch                     SchoolBranch                 @relation(fields: [branchId], references: [id])
+  branchId                   Int
+  schoolId                   Int
+  name                       ClassName
+  section                    SectionName
+  roomNumber                 String?                      @db.VarChar(20)
+  academicYear               Int                          @default(2025)
+  // 🔥 Relation to Class Teacher
+  classTeacher               User?                        @relation("ClassTeacherLeader", fields: [classTeacherId], references: [id]) // Assigned Class Teacher for a Paricular shcool branch for a particular school
+  classTeacherId             Int? // Make it required if EVERY class MUST have a teacher
+  // ✅ Many-to-Many Class Teacher Assignments
+  students                   Student[]
+  routines                   Routine[]
+  admissions                 Admission[]
+  attendance                 Attendance[]
+  assignments                Assignment[]
+  tests                      Test[]
+  fees                       Fee[]
+  resources                  Resource[]
+  analytics                  Analytic[]
+  classSubjects              ClassSubject[]
+  departments                Department[]
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  DutyAssignment             DutyAssignment[]
+  SportsEvent                SportsEvent[]
+  AdmissionTestApplication   AdmissionTestApplication[]
+  AdmissionTest              AdmissionTest[]
+  FeeScheme                  FeeScheme[]
+  ClassLifeSystemInstruction ClassLifeSystemInstruction[]
+  ClassFoodInstruction       ClassFoodInstruction[]
+  GuardianCommunicationLog   GuardianCommunicationLog[]
+  GuardianCallLog            GuardianCallLog[]
+  ParentTeacherMeetingNote   ParentTeacherMeetingNote[]
+  GuardianStudentSpecialNote GuardianStudentSpecialNote[]
+  PrayerOathAssignment       PrayerOathAssignment[]
+  Punishment                 Punishment[]
+  KnightsCdtpSession         KnightsCdtpSession[]
+  PublicSpeakingOccasion     PublicSpeakingOccasion[]
+  SemesterExamSchedule       SemesterExamSchedule[]
+  DailyHomeworkCompletion    DailyHomeworkCompletion[]
+  ImprovementSuggestion      ImprovementSuggestion[]
+  schoolConcerns             SchoolConcern[]
+  policyExceptions           PolicyException[]
+
+  @@unique([branchId, name, section, academicYear])
+  @@unique([schoolId, branchId, name, section, academicYear]) // ✅ Clean, scalable
+}
+
+enum SectionName {
+  A
+  B
+  C
+  D
+  E
+  F
+  G
+  H
+  I
+  J
+  K
+  L
+  M
+  N
+  O
+  P
+  Q
+  R
+  S
+  T
+  U
+  V
+  W
+  X
+  Y
+  Z
+}
+
+enum ClassName {
+  LKG
+  UKG
+  I
+  II
+  III
+  IV
+  V
+  VI
+  VII
+  VIII
+  IX
+  X
+  XS
+  XI
+  XII
+  XIIS
+  XIII
+  XIIIJ
+}
+
+model ClassSubject {
+  id                        Int                         @id @default(autoincrement())
+  classId                   Int
+  class                     SchoolClass                 @relation(fields: [classId], references: [id])
+  subjectId                 Int
+  subject                   Subject                     @relation(fields: [subjectId], references: [id])
+  branchId                  Int
+  branch                    SchoolBranch                @relation(fields: [branchId], references: [id])
+  schoolId                  Int
+  school                    School                      @relation(fields: [schoolId], references: [id])
+  syllabus                  Json?
+  teacher                   User?                       @relation("AssignedTeacher", fields: [teacherId], references: [id])
+  teacherId                 Int?
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  assignments               Assignment[]
+  tests                     Test[]
+  Routine                   Routine[]
+  SportsEvent               SportsEvent[]
+  SyllabusScheduleDailyPlan SyllabusScheduleDailyPlan[]
+  BiWeeklyHomeworkReview    BiWeeklyHomeworkReview[]
+  SemesterResult            SemesterResult[]
+  SubjectBook               SubjectBook[]
+  StudentBehaviourLog       StudentBehaviourLog[]
+  SemesterExamSchedule      SemesterExamSchedule[]
+  BoardExam                 BoardExam[]
+  SubjectSyllabus           SubjectSyllabus[]
+  DailyHomeworkCompletion   DailyHomeworkCompletion[]
+
+  @@unique([classId, subjectId])
+  @@index([classId])
+  @@index([subjectId])
+  @@index([branchId])
+  @@index([teacherId])
+}
+
+model SubjectBook {
+  id             Int          @id @default(autoincrement())
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+
+  title     String   @db.VarChar(200)
+  author    String?  @db.VarChar(100)
+  publisher String?  @db.VarChar(100)
+  isbn      String?  @db.VarChar(50)
+  edition   String?  @db.VarChar(50)
+  language  String?  @db.VarChar(30)
+  bookType  BookType @default(TEXTBOOK) // ENUM 📚
+
+  downloadUrl String? @db.VarChar(300) // Optional - for PDF/online resources
+  purchaseUrl String? @db.VarChar(300) // Optional - buy link
+  studyUrl    String? @db.VarChar(300)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classSubjectId])
+}
+
+enum BookType {
+  TEXTBOOK
+  CAREERBOOK
+  WORKBOOK
+  REFERENCE
+  GUIDE
+  NOVEL
+  SUPPLEMENT
+}
+
+model ClassLifeSystemInstruction {
+  id      Int         @id @default(autoincrement())
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  classId Int
+
+  title       String        @db.VarChar(150) // e.g., "Drink water at 10 AM"
+  description String?       @db.Text // Detailed message or reason
+  timeOfDay   String?       @db.VarChar(20) // "Morning", "Afternoon", "Evening", etc.
+  weekDay     WeekDay? // Optional: Day of week enum
+  frequency   FrequencyType @default(DAILY)
+
+  mediaUrl        String?  @db.VarChar(300) // Optional image/video URL
+  mediaUrl1       String?  @db.VarChar(300) // Optional image/video URL
+  eudcation_link1 String?  @db.VarChar(300) // Optional image/video URL
+  eudcation_link2 String?  @db.VarChar(300) // Optional image/video URL
+  createdBy       Int? // teacherId/adminId
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([classId])
+}
+
+enum WeekDay {
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+  SUNDAY
+}
+
+enum FrequencyType {
+  DAILY
+  WEEKLY
+  MONTHLY
+  ONCE
+}
+
+model ClassFoodInstruction {
+  id      Int         @id @default(autoincrement())
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  classId Int
+
+  title          String   @db.VarChar(100) // e.g., “Power Boost Breakfast”
+  description    String?  @db.Text // Why it is recommended?
+  foodType       FoodType @default(BRAIN_POWER)
+  suggestedItems Json // List of items [{ name, quantity, benefit }]
+  mediaUrl       String?  @db.VarChar(300) // Optional image or video
+
+  timeOfDay String?       @db.VarChar(30) // Morning, Lunch, Evening, Snack
+  weekDay   WeekDay? // MONDAY, TUESDAY, etc
+  frequency FrequencyType @default(DAILY)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classId])
+}
+
+enum FoodType {
+  IMMUNITY
+  BRAIN_POWER
+  ENERGY_BOOST
+  DIGESTION
+  GROWTH
+  BALANCED
+  VITAMIN_RICH
+}
+
+model AdmissionTest {
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(100)
+  testDate DateTime // single test date
+  maxMarks Float // total: 100
+  venue    String?  @db.VarChar(200)
+
+  // relations
+  class        SchoolClass @relation(fields: [classId], references: [id])
+  classId      Int
+  schoolId     Int
+  branchId     Int
+  academicYear Int         @default(2025)
+
+  testSubjects TestSubjectSyllabus[]
+  applications AdmissionTestApplication[]
+  SchoolBranch SchoolBranch[]             @relation("AdmissionTestBranch")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classId])
+  @@index([branchId])
+}
+
+model TestSubjectSyllabus {
+  id     Int           @id @default(autoincrement())
+  test   AdmissionTest @relation(fields: [testId], references: [id])
+  testId Int
+
+  subjectName String @db.VarChar(100) // e.g., "Math", "General Science"
+  syllabus    String @db.Text
+  weightage   Float // e.g., 25.0 (part of 100 marks)
+
+  @@index([testId])
+}
+
+enum AdmissionApplicationStatus {
+  PENDING
+  QUALIFIED
+  NOT_QUALIFIED
+  ADMITTED
+  SELECTED
+  REJECTED
+  BANNED
+}
+
+model AdmissionTestApplication {
+  id                   Int                        @id @default(autoincrement())
+  studentUid           String                     @unique @db.VarChar(30)
+  guardian_uid         String?                    @db.VarChar(30)
+  studentId            Int?
+  firstName            String                     @db.VarChar(100)
+  middleName           String?                    @db.VarChar(100)
+  lastName             String                     @db.VarChar(100)
+  gender               String                     @db.VarChar(20)
+  dateOfBirth          DateTime
+  bloodGroup           String?                    @db.VarChar(10)
+  nationality          String?                    @db.VarChar(50)
+  religion             String?                    @db.VarChar(50)
+  casteCategory        String?                    @db.VarChar(50)
+  profileImageUrl      String?                    @db.VarChar(300)
+  dreamOrAim           String?                    @db.VarChar(200)
+  hobbies              String?                    @db.VarChar(200)
+  specialTalents       String?                    @db.VarChar(200)
+  fatherName           String?                    @db.VarChar(100)
+  fatherContact        String?                    @db.VarChar(20)
+  fatherEmail          String?                    @db.VarChar(100)
+  fatherProfession     String?                    @db.VarChar(100)
+  fatherQualification  String?                    @db.VarChar(100)
+  fatherIncome         Float?
+  motherName           String?                    @db.VarChar(100)
+  motherContact        String?                    @db.VarChar(20)
+  motherEmail          String?                    @db.VarChar(100)
+  motherProfession     String?                    @db.VarChar(100)
+  motherQualification  String?                    @db.VarChar(100)
+  motherIncome         Float?
+  guardianName         String?                    @db.VarChar(100)
+  guardianContact      String?                    @db.VarChar(20)
+  guardianRelation     String?                    @db.VarChar(50)
+  guardianAddress      String?                    @db.VarChar(300)
+  emergencyContact     String?                    @db.VarChar(20)
+  residentialAddress   String?                    @db.VarChar(300)
+  city                 String?                    @db.VarChar(100)
+  state                String?                    @db.VarChar(100)
+  pinCode              String?                    @db.VarChar(10)
+  isTransportRequired  Boolean                    @default(false)
+  preferredLanguage    String?                    @db.VarChar(50)
+  previousSchoolName   String?                    @db.VarChar(150)
+  lastExamPassed       String?                    @db.VarChar(100)
+  lastExamResult       Float?
+  previousAdmissionFee Float?
+  previousMonthlyFee   Float?
+  reasonOfTransfer     String?                    @db.VarChar(300)
+  previousSchoolMedium String?                    @db.VarChar(50)
+  previousSchoolBoard  String?                    @db.VarChar(50)
+  previousSchoolCity   String?                    @db.VarChar(100)
+  branch               SchoolBranch               @relation(fields: [branchId], references: [id])
+  branchId             Int
+  schoolId             Int
+  class                SchoolClass                @relation(fields: [classId], references: [id])
+  classId              Int
+  academicYear         Int                        @default(2025)
+  applicationDate      DateTime                   @default(now())
+  category             AdmissionFeeSchemeCategory // Mandatory: Fees, Economical+, Economical, General KSAT, General Direct
+  admission            AdmissionTest?             @relation(fields: [admissionId], references: [id])
+  admissionId          Int?                       @unique
+  createdAt            DateTime                   @default(now())
+  updatedAt            DateTime                   @updatedAt
+  feeSchemeId          Int?
+  feeScheme            FeeScheme?                 @relation(fields: [feeSchemeId], references: [id])
+
+  qualified              Boolean?                   @default(false)
+  totalMarks             Float?
+  rank                   Int?
+  selectionRemarks       String?                    @db.VarChar(300)
+  phaseSelected          String?                    @db.VarChar(50) // optional: e.g., "Phase 1", "Waiting List"
+  admitCardNumber        String?                    @unique @db.VarChar(30)
+  admissionAllotmentDate DateTime? // 👈 new field for selected candidates
+  seatRoomId             Int? // 🔗 FK to Room
+  seatRoom               Room?                      @relation(fields: [seatRoomId], references: [id])
+  seatRollNumber         String?                    @db.VarChar(20)
+  status                 AdmissionApplicationStatus @default(PENDING) // ✅ Enum preferred
+  finalAdmissionNumber   String?                    @unique @db.VarChar(30) // 🆕 generated once admitted
+  admissionConfirmedBy   String?                    @db.VarChar(100) // Optional: track admin
+  remarksInternal        String?                    @db.VarChar(300) // 🗒️ Internal use
+  Admission              Admission[]
+
+  @@index([branchId])
+  @@index([classId])
+  @@index([studentUid])
+}
+
+enum AdmissionStatus {
+  PENDING
+  SELECTED
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum AdmissionType {
+  FRESH
+  READMISSION
+  DIRECT
+  MIGRATION
+}
+
+model Admission {
+  id                      Int                        @id @default(autoincrement())
+  student                 Student                    @relation(fields: [studentId], references: [id])
+  studentId               Int
+  branch                  SchoolBranch               @relation(fields: [branchId], references: [id])
+  branchId                Int
+  schoolId                Int
+  class                   SchoolClass                @relation(fields: [classId], references: [id])
+  classId                 Int
+  admissionType           AdmissionType
+  admissionDate           DateTime
+  status                  AdmissionStatus            @default(PENDING)
+  previousClassId         Int?
+  transferCertificateId   String?                    @db.VarChar(50)
+  createdAt               DateTime                   @default(now())
+  updatedAt               DateTime                   @updatedAt
+  application             AdmissionTestApplication?  @relation(fields: [applicationId], references: [id])
+  applicationId           Int?                       @unique
+  feeScheme               FeeScheme?                 @relation(fields: [feeSchemeId], references: [id])
+  feeSchemeId             Int?
+  finalAdmissionNumber    String                     @unique @db.VarChar(30)
+  Student                 Student[]                  @relation("FinalAdmission")
+  AdmissionFeeTransaction AdmissionFeeTransaction[]
+  MonthlyFee              MonthlyFee[]
+  enrollment              StudentEnrollment?
+  provisionalCollections  ProvisionalFeeCollection[]
+
+  @@index([studentId])
+  @@index([branchId])
+  @@index([classId])
+  @@index([feeSchemeId])
+}
+
+enum AdmissionFeeSchemeCategory {
+  KSAT_SUPPORT_PLUS // Highest support
+  KSAT_SUPPORT // Regular support
+  KSAT_STANDARD // No support, but KSAT path
+  KSAT_GENERAL // KSAT-qualified general
+  DIRECT_GENERAL // Direct admission (no KSAT)
+}
+
+enum AdmissionFeeType {
+  FRESH
+  READMISSION
+  MIGRATION
+}
+
+enum FeePaymentMethod {
+  CASH
+  UPI
+  BANK_TRANSFER
+  ONLINE_GATEWAY
+  CHEQUE
+}
+
+model AdmissionFeeTransaction {
+  id                    Int                       @id @default(autoincrement())
+  admission             Admission                 @relation(fields: [admissionId], references: [id])
+  admissionId           Int
+  student               Student                   @relation(fields: [studentId], references: [id])
+  studentId             Int
+  schoolId              Int
+  branchId              Int
+  classId               Int
+  academicYear          Int
+  amount                Float
+  feeType               AdmissionFeeType          @default(FRESH)
+  paymentDate           DateTime                  @default(now())
+  paymentMethod         FeePaymentMethod
+  transactionId         String?                   @db.VarChar(100) // optional: UPI Ref/Cheque no etc
+  receivedBy            String?                   @db.VarChar(100) // admin name or user ID
+  remarks               String?                   @db.VarChar(300)
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+  provisionalCollection ProvisionalFeeCollection? @relation("ProvisionalFeeCollectionFinalAdmissionFee")
+
+  @@index([studentId])
+  @@index([admissionId])
+  @@index([academicYear])
+}
+
+model FeeScheme {
+  id                       Int                        @id @default(autoincrement())
+  class                    SchoolClass                @relation(fields: [classId], references: [id])
+  classId                  Int
+  category                 AdmissionFeeSchemeCategory
+  monthlyFee               Float
+  admissionFee             Float
+  readmissionFee           Float
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  Admission                Admission[]
+  Student                  Student[]
+  AdmissionTestApplication AdmissionTestApplication[]
+
+  @@unique([classId, category])
+  @@index([classId])
+}
+
+enum FeeStatus {
+  UNPAID
+  PARTIALLY_PAID
+  PAID
+  WAIVED
+}
+
+model StudentBehaviourLog {
+  id        Int     @id @default(autoincrement())
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  classSubject   ClassSubject? @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int?
+
+  incidentDate  DateTime          @default(now())
+  category      BehaviourCategory // ENUM: ACADEMIC, DISCIPLINE, etc.
+  type          String            @db.VarChar(100) // e.g., "Didn't do homework"
+  description   String?           @db.Text // Optional notes
+  severityLevel Int // 1 = mild, 5 = severe
+
+  punishmentId Int?
+  punishment   Punishment? @relation(fields: [punishmentId], references: [id])
+
+  isResolved   Boolean @default(false)
+  resolvedBy   String? @db.VarChar(100) // teacher or admin name
+  resolvedNote String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId, incidentDate])
+}
+
+model Punishment {
+  id                  Int                   @id @default(autoincrement())
+  class               SchoolClass?          @relation(fields: [classId], references: [id])
+  classId             Int?
+  title               String                @db.VarChar(100) // e.g., “Write 3 pages apology”, “No games for 1 week”
+  description         String                @db.Text // Describe activity
+  severity            Int // From 1 (minor) to 5 (serious)
+  type                PunishmentType // ENUM (BEHAVIORAL, ACADEMIC, PHYSICAL_TASK, etc.)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  StudentBehaviourLog StudentBehaviourLog[]
+
+  @@index([classId])
+}
+
+enum BehaviourCategory {
+  ACADEMIC // eg. Not completing homework
+  DISCIPLINE // eg. Fighting, Disrespect
+  ATTENDANCE // eg. Late or bunking
+  UNIFORM // eg. Improper dress
+  DEVICE_MISUSE // eg. Using phone
+  EXAM_MISCONDUCT // eg. Cheating
+}
+
+enum PunishmentType {
+  BEHAVIORAL // e.g., Public apology, speech
+  ACADEMIC // e.g., Extra questions, library reading
+  PHYSICAL_TASK // e.g., Clean blackboard, help staff
+  PRIVILEGE_LOSS // e.g., No playtime, event ban
+  COUNSELING // e.g., One-on-one session
+}
+
+model MonthlyFee {
+  id           Int        @id @default(autoincrement())
+  student      Student?   @relation(fields: [studentId], references: [id])
+  studentId    Int
+  admission    Admission? @relation(fields: [admissionId], references: [id])
+  admissionId  Int?
+  schoolId     Int
+  branchId     Int
+  classId      Int
+  academicYear Int
+  month        Int // 1 to 12 (Jan to Dec) — even if academic session is April to March
+  year         Int // To support April 2025 - March 2026, store real year here
+  dueDate      DateTime
+  paidAmount   Float      @default(0)
+  totalDue     Float // Captured from the assigned FeeScheme at creation time
+  status       FeeStatus  @default(UNPAID)
+  isWaived     Boolean    @default(false)
+  waivedAmount Float?     @default(0)
+  remarks      String?    @db.VarChar(300)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  fineAmount   Float?     @default(0)
+
+  MonthlyFeePayments     MonthlyFeePayment[]
+  provisionalCollections ProvisionalFeeCollection[]
+
+  @@unique([studentId, month, year]) // prevent duplicate entry
+  @@index([studentId])
+  @@index([admissionId])
+}
+
+enum PaymentMethod {
+  CASH
+  UPI
+  NET_BANKING
+  ONLINE_GATEWAY
+}
+
+model MonthlyFeePayment {
+  id                    Int                       @id @default(autoincrement())
+  monthlyFee            MonthlyFee                @relation(fields: [monthlyFeeId], references: [id])
+  monthlyFeeId          Int
+  amount                Float
+  paymentDate           DateTime                  @default(now())
+  method                PaymentMethod
+  transactionId         String?                   @db.VarChar(100)
+  receivedBy            String?                   @db.VarChar(100)
+  remarks               String?                   @db.VarChar(300)
+  createdAt             DateTime                  @default(now())
+  updatedAt             DateTime                  @updatedAt
+  provisionalCollection ProvisionalFeeCollection? @relation("ProvisionalFeeCollectionFinalPayment")
+
+  // A bank/UPI/gateway reference can be reused for different monthly ledger
+  // rows in one settlement, but never twice for the same row.
+  @@unique([monthlyFeeId, transactionId])
+}
+
+// GCI-collected money is never posted to the student ledger directly. It
+// remains provisional until the scoped COEF verifies it and creates the final
+// MonthlyFeePayment record.
+enum ProvisionalFeeCollectionStatus {
+  PENDING_HANDOVER
+  HANDED_OVER
+  PENDING_VERIFICATION
+  VERIFIED
+  COEF_APPROVED
+  BANK_SUBMITTED
+  RECEIVED
+  REJECTED
+  CANCELLED
+}
+
+// Faculty evidence is never treated as generic website media.  It has a
+// separate, auditable submission → Administration verification lifecycle.
+enum SchoolMediaEvidenceStatus {
+  SUBMITTED
+  VERIFIED
+  REJECTED
+}
+
+enum SchoolMediaEvidenceReason {
+  EVENT_DOCUMENTATION
+  ACTIVITY_DOCUMENTATION
+  STUDENT_ACHIEVEMENT
+  FACILITY_MAINTENANCE
+  SAFETY_INCIDENT
+  ADMISSIONS_VERIFICATION
+  COMPLIANCE_DOCUMENT
+  NOTICE_OR_CIRCULAR
+  OTHER_AUTHORISED
+}
+
+model ProvisionalFeeCollection {
+  id                             Int                            @id @default(autoincrement())
+  publicId                       String                         @unique @default(uuid()) @db.Uuid
+  // One custody chain is reused for monthly tuition, new admission, and
+  // readmission.  Exactly one of monthlyFeeId/admissionId is supplied by the
+  // corresponding authorised workflow.
+  paymentKind                    LifecycleFeeKind               @default(MONTHLY_TUITION)
+  monthlyFee                     MonthlyFee?                    @relation(fields: [monthlyFeeId], references: [id], onDelete: Restrict)
+  monthlyFeeId                   Int?
+  admission                      Admission?                     @relation(fields: [admissionId], references: [id], onDelete: Restrict)
+  admissionId                    Int?
+  schoolId                       Int
+  branchId                       Int
+  classId                        Int
+  amount                         Float
+  method                         PaymentMethod
+  transactionId                  String?                        @db.VarChar(100)
+  idempotencyKey                 String                         @unique @db.VarChar(100)
+  submittedRemarks               String?                        @db.VarChar(300)
+  status                         ProvisionalFeeCollectionStatus @default(PENDING_HANDOVER)
+  collector                      User                           @relation("ProvisionalFeeCollectionCollector", fields: [collectorUserId], references: [id], onDelete: Restrict)
+  collectorUserId                Int
+  collectedAt                    DateTime                       @default(now())
+  handedOverBy                   User?                          @relation("ProvisionalFeeCollectionHandoverBy", fields: [handedOverById], references: [id], onDelete: SetNull)
+  handedOverById                 Int?
+  handedOverAt                   DateTime?
+  handoverNote                   String?                        @db.VarChar(300)
+  verifier                       User?                          @relation("ProvisionalFeeCollectionVerifier", fields: [verifiedById], references: [id], onDelete: SetNull)
+  verifiedById                   Int?
+  verifiedAt                     DateTime?
+  verificationNote               String?                        @db.VarChar(300)
+  bankSubmittedBy                User?                          @relation("ProvisionalFeeCollectionBankSubmittedBy", fields: [bankSubmittedById], references: [id], onDelete: SetNull)
+  bankSubmittedById              Int?
+  bankSubmittedAt                DateTime?
+  bankTransactionId              String?                        @db.VarChar(100)
+  bankSubmissionNote             String?                        @db.VarChar(300)
+  // Central Administration records the bank-credit evidence separately from
+  // the COEF's school-bank submission reference. This is required before a
+  // provisional collection can become a final student-ledger receipt.
+  centralBankCreditReference     String?                        @db.VarChar(100)
+  centralBankCreditDate          DateTime?
+  receivedBy                     User?                          @relation("ProvisionalFeeCollectionReceivedBy", fields: [receivedById], references: [id], onDelete: SetNull)
+  receivedById                   Int?
+  receivedAt                     DateTime?
+  receivedNote                   String?                        @db.VarChar(300)
+  finalPayment                   MonthlyFeePayment?             @relation("ProvisionalFeeCollectionFinalPayment", fields: [finalPaymentId], references: [id], onDelete: SetNull)
+  finalPaymentId                 Int?                           @unique
+  finalAdmissionFeeTransaction   AdmissionFeeTransaction?       @relation("ProvisionalFeeCollectionFinalAdmissionFee", fields: [finalAdmissionFeeTransactionId], references: [id], onDelete: SetNull)
+  finalAdmissionFeeTransactionId Int?                           @unique
+  createdAt                      DateTime                       @default(now())
+  updatedAt                      DateTime                       @updatedAt
+
+  @@index([schoolId, branchId, classId, status, createdAt])
+  @@index([collectorUserId, status, createdAt])
+  @@index([monthlyFeeId, status])
+  @@index([admissionId, paymentKind, status])
+}
+
+model Student {
+  id                       Int                         @id @default(autoincrement())
+  rollNumber               String?                     @db.VarChar(50)
+  admissionNumber          String?                     @unique @db.VarChar(30) // Permanent login/admission ID: SSPS-YYYY-000001 (derived from immutable Student.id; never Aadhaar/UID).
+  govt_studentId           String?                     @db.VarChar(20)
+  biometricId              String?                     @db.VarChar(50)
+  loginEmail               String?                     @unique @db.VarChar(100)
+  aadhaarNumber            String?                     @db.VarChar(20)
+  loginPassword            String?                     @db.VarChar(255) // Password hash only; Aadhaar/UID is never used as a login credential.
+  loginActivationCodeHash  String?                     @db.VarChar(255)
+  loginActivationExpiresAt DateTime?
+  loginActivatedAt         DateTime?
+  academicYear             Int?                        @default(2025)
+  admittedViaTest          Boolean?                    @default(false)
+  finalAdmissionId         Int?                        @unique
+  finalAdmission           Admission?                  @relation("FinalAdmission", fields: [finalAdmissionId], references: [id])
+  studentCategory          AdmissionFeeSchemeCategory?
+  enrollmentMode           String?                     @db.VarChar(50)
+  isScholarshipHolder      Boolean?                    @default(false)
+  feeSchemeId              Int?
+  feeScheme                FeeScheme?                  @relation(fields: [feeSchemeId], references: [id])
+  branch                   SchoolBranch                @relation(fields: [branchId], references: [id])
+  branchId                 Int
+  schoolId                 Int
+  class                    SchoolClass                 @relation(fields: [classId], references: [id])
+  classId                  Int
+  firstName                String                      @db.VarChar(100)
+  middleName               String?                     @db.VarChar(100)
+  lastName                 String                      @db.VarChar(100)
+  gender                   String?                     @db.VarChar(20)
+  dateOfBirth              DateTime?
+  admissionDate            DateTime?
+  status                   StudentStatus?              @default(ACTIVE)
+  guardianContact          String?                     @db.VarChar(100)
+  bloodGroup               String?                     @db.VarChar(10)
+  nationality              String?                     @db.VarChar(50)
+  religion                 String?                     @db.VarChar(50)
+  casteCategory            String?                     @db.VarChar(50)
+  profileImageUrl          String?                     @db.VarChar(300)
+  dreamOrAim               String?                     @db.VarChar(200)
+  hobbies                  String?                     @db.VarChar(200)
+  specialTalents           String?                     @db.VarChar(200)
+  fatherName               String?                     @db.VarChar(100)
+  fatherContact            String?                     @db.VarChar(20)
+  fatherEmail              String?                     @db.VarChar(100)
+  fatherProfession         String?                     @db.VarChar(100)
+  fatherQualification      String?                     @db.VarChar(100)
+  fatherIncome             Float?
+  motherName               String?                     @db.VarChar(100)
+  motherContact            String?                     @db.VarChar(20)
+  motherEmail              String?                     @db.VarChar(100)
+  motherProfession         String?                     @db.VarChar(100)
+  motherQualification      String?                     @db.VarChar(100)
+  motherIncome             Float?
+  guardianName             String?                     @db.VarChar(100)
+  guardianRelation         String?                     @db.VarChar(50)
+  guardianAddress          String?                     @db.VarChar(300)
+  emergencyContact         String?                     @db.VarChar(20)
+  residentialAddress       String?                     @db.VarChar(300)
+  city                     String?                     @db.VarChar(100)
+  state                    String?                     @db.VarChar(100)
+  pinCode                  String?                     @db.VarChar(10)
+  isTransportRequired      Boolean?                    @default(false)
+  preferredLanguage        String?                     @db.VarChar(50)
+  previousSchoolName       String?                     @db.VarChar(150)
+  lastExamPassed           String?                     @db.VarChar(100)
+  lastExamResult           Float?
+  previousAdmissionFee     Float?
+  previousMonthlyFee       Float?
+  reasonOfTransfer         String?                     @db.VarChar(300)
+  previousSchoolMedium     String?                     @db.VarChar(50)
+  previousSchoolBoard      String?                     @db.VarChar(50)
+  previousSchoolCity       String?                     @db.VarChar(100)
+  healthImmunization       Json?
+  createdAt                DateTime                    @default(now())
+  updatedAt                DateTime                    @updatedAt
+
+  admissions                  Admission[]
+  attendance                  Attendance[]
+  assignments                 Assignment[]
+  tests                       Test[]
+  fees                        Fee[]
+  resources                   Resource[]
+  StudentAssignment           StudentAssignment[]
+  TestMark                    TestMark[]
+  AdmissionFeeTransaction     AdmissionFeeTransaction[]
+  MonthlyFee                  MonthlyFee[]
+  LeaveRequest                LeaveRequest[]
+  StudentHomeworkReview       StudentHomeworkReview[]
+  SemesterResult              SemesterResult[]
+  GuardianCommunicationLog    GuardianCommunicationLog[]
+  GuardianCallLog             GuardianCallLog[]
+  ParentTeacherMeetingNote    ParentTeacherMeetingNote[]
+  GuardianStudentSpecialNote  GuardianStudentSpecialNote[]
+  PublicSpeechSubmission      PublicSpeechSubmission[]
+  StudentBehaviourLog         StudentBehaviourLog[]
+  PrayerOathAssignment        PrayerOathAssignment[]
+  BoardExamResult             BoardExamResult[]
+  ImprovementSuggestion       ImprovementSuggestion[]
+  DailyHomeworkCompletion     DailyHomeworkCompletion[]
+  schoolConcerns              SchoolConcern[]
+  legacyFirebaseRecord        StudentLegacyFirebaseRecord?
+  enrollments                 StudentEnrollment[]
+  transferCertificateRequests TransferCertificateRequest[]
+
+  @@unique([rollNumber, classId, branchId, schoolId])
+  @@index([branchId])
+  @@index([classId])
+}
+
+// Immutable academic-session placements.  This is additive beside the legacy
+// current-class fields on Student, which keeps attendance, monthly fees, and
+// existing panels backward compatible during rollout.
+model StudentEnrollment {
+  id           Int                       @id @default(autoincrement())
+  publicId     String                    @unique @default(uuid()) @db.Uuid
+  student      Student                   @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  studentId    Int
+  admission    Admission?                @relation(fields: [admissionId], references: [id], onDelete: Restrict)
+  admissionId  Int?                      @unique
+  schoolId     Int
+  branchId     Int
+  classId      Int
+  academicYear Int
+  status       StudentEnrollmentStatus   @default(PENDING_PAYMENT)
+  decision     StudentEnrollmentDecision
+  startedAt    DateTime                  @default(now())
+  completedAt  DateTime?
+  leavingDate  DateTime?
+  note         String?                   @db.VarChar(500)
+  createdBy    User                      @relation("StudentEnrollmentCreatedBy", fields: [createdById], references: [id], onDelete: Restrict)
+  createdById  Int
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+
+  @@unique([studentId, academicYear])
+  @@index([schoolId, branchId, classId, academicYear, status])
+  @@index([createdById, createdAt])
+}
+
+model TransferCertificateRequest {
+  id                    Int                              @id @default(autoincrement())
+  publicId              String                           @unique @default(uuid()) @db.Uuid
+  student               Student                          @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  studentId             Int
+  schoolId              Int
+  branchId              Int
+  classId               Int
+  academicYear          Int
+  requestedTransferDate DateTime
+  destinationSchoolName String?                          @db.VarChar(160)
+  destinationLocation   String?                          @db.VarChar(160)
+  reason                TransferCertificateReason
+  guardianRemarks       String?                          @db.Text
+  staffRemarks          String?                          @db.Text
+  sensitiveDetails      String?                          @db.Text
+  status                TransferCertificateRequestStatus @default(REQUESTED)
+  requestedBy           User                             @relation("TransferCertificateRequestInitiatedBy", fields: [requestedById], references: [id], onDelete: Restrict)
+  requestedById         Int
+  principalDecisionBy   User?                            @relation("TransferCertificateRequestPrincipalDecisionBy", fields: [principalDecisionById], references: [id], onDelete: SetNull)
+  principalDecisionById Int?
+  principalDecisionAt   DateTime?
+  principalRemarks      String?                          @db.Text
+  financeVerifiedBy     User?                            @relation("TransferCertificateRequestFinanceVerifiedBy", fields: [financeVerifiedById], references: [id], onDelete: SetNull)
+  financeVerifiedById   Int?
+  financeVerifiedAt     DateTime?
+  financeRemarks        String?                          @db.Text
+  financialSnapshot     Json?
+  issuedBy              User?                            @relation("TransferCertificateRequestIssuedBy", fields: [issuedById], references: [id], onDelete: SetNull)
+  issuedById            Int?
+  issuedAt              DateTime?
+  tcNumber              String?                          @unique @db.VarChar(60)
+  governmentTcId        String?                          @unique @db.VarChar(100)
+  documentReference     String?                          @db.VarChar(300)
+  reissuedFromId        Int?
+  createdAt             DateTime                         @default(now())
+  updatedAt             DateTime                         @updatedAt
+  feedback              TransferCertificateFeedback[]
+
+  @@index([schoolId, branchId, classId, status, createdAt])
+  @@index([studentId, createdAt])
+}
+
+model TransferCertificateFeedback {
+  id           Int                        @id @default(autoincrement())
+  request      TransferCertificateRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  requestId    Int
+  category     TransferCertificateReason
+  explanation  String                     @db.Text
+  isSensitive  Boolean                    @default(false)
+  recordedBy   User                       @relation("TransferCertificateFeedbackRecordedBy", fields: [recordedById], references: [id], onDelete: Restrict)
+  recordedById Int
+  createdAt    DateTime                   @default(now())
+
+  @@index([requestId, createdAt])
+}
+
+// Private import provenance and legacy payload archive. This relation is intentionally
+// not included by existing student APIs, so a migration cannot expand panel exposure.
+model StudentLegacyFirebaseRecord {
+  id         Int      @id @default(autoincrement())
+  studentId  Int      @unique
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  sourcePath String   @unique @db.VarChar(200)
+  sourceData Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model ImprovementSuggestion {
+  id              Int                   @id @default(autoincrement())
+  studentId       Int
+  student         Student               @relation(fields: [studentId], references: [id])
+  classId         Int
+  class           SchoolClass           @relation(fields: [classId], references: [id])
+  branchId        Int
+  branch          SchoolBranch          @relation(fields: [branchId], references: [id])
+  schoolId        Int
+  school          School                @relation(fields: [schoolId], references: [id])
+  submittedBy     SuggestionSubmittedBy @default(GUARDIAN)
+  month           Int // 1-12
+  year            Int // eg: 2025
+  category        SuggestionCategory
+  message         String                @db.VarChar(1000)
+  responseMessage String?               @db.VarChar(1000) // Optional reply from school
+  visibleToAdmin  Boolean               @default(true)
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@unique([studentId, month, year]) // One suggestion per student per month
+}
+
+enum SuggestionCategory {
+  DISCIPLINE
+  UNIFORM
+  SYLLABUS
+  HOMEWORK
+  TEACHER_BEHAVIOR
+  CLEANLINESS
+  TRANSPORT
+  EXTRACURRICULAR
+  TIMETABLE
+  OTHER
+}
+
+enum SuggestionSubmittedBy {
+  STUDENT
+  GUARDIAN
+}
+
+enum SchoolIssueStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  ESCALATED
+  CLOSED
+}
+
+// A concern is distinct from a monthly improvement suggestion. It is attached
+// to a real student and inherits school, branch, and class scope.
+model SchoolConcern {
+  id          Int                   @id @default(autoincrement())
+  publicId    String                @unique @default(uuid()) @db.Uuid
+  studentId   Int
+  student     Student               @relation(fields: [studentId], references: [id])
+  classId     Int
+  class       SchoolClass           @relation(fields: [classId], references: [id])
+  branchId    Int
+  branch      SchoolBranch          @relation(fields: [branchId], references: [id])
+  schoolId    Int
+  school      School                @relation(fields: [schoolId], references: [id])
+  category    SuggestionCategory
+  description String                @db.VarChar(1000)
+  status      SchoolIssueStatus     @default(OPEN)
+  resolution  String?               @db.VarChar(1000)
+  submittedBy SuggestionSubmittedBy @default(GUARDIAN)
+  handledById Int?
+  handledBy   User?                 @relation("SchoolConcernHandledBy", fields: [handledById], references: [id])
+  handledAt   DateTime?
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+
+  @@index([schoolId, branchId, classId, status])
+  @@index([studentId, createdAt])
+  @@index([handledById])
+}
+
+enum OperationalRequestStatus {
+  PENDING
+  IN_PROGRESS
+  ON_HOLD
+  APPROVED
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum OperationalRequestPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// A headquarters-controlled exception to a published school policy. This is
+// intentionally separate from operational tasks so approval responsibility,
+// reasons, and post-approval execution remain auditable.
+enum PolicyExceptionCategory {
+  FINANCIAL
+  ACADEMIC
+  STAFF
+  OPERATIONAL
+  MARKETING
+  COMMUNICATIONS
+  EXECUTIVE
+}
+
+enum PolicyExceptionStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  EXECUTION_VERIFIED
+  CLOSED
+  CANCELLED
+}
+
+model PolicyException {
+  id                    Int                     @id @default(autoincrement())
+  publicId              String                  @unique @default(uuid()) @db.Uuid
+  schoolId              Int
+  school                School                  @relation(fields: [schoolId], references: [id])
+  branchId              Int?
+  branch                SchoolBranch?           @relation(fields: [branchId], references: [id])
+  classId               Int?
+  class                 SchoolClass?            @relation(fields: [classId], references: [id])
+  academicYear          Int?
+  category              PolicyExceptionCategory
+  routedRoleCode        String                  @db.VarChar(100)
+  title                 String                  @db.VarChar(160)
+  reason                String                  @db.Text
+  requestedChange       Json
+  supportingInformation String?                 @db.Text
+  status                PolicyExceptionStatus   @default(SUBMITTED)
+  requestedById         Int
+  requestedBy           User                    @relation("PolicyExceptionRequestedBy", fields: [requestedById], references: [id])
+  decidedById           Int?
+  decidedBy             User?                   @relation("PolicyExceptionDecidedBy", fields: [decidedById], references: [id])
+  decisionNote          String?                 @db.Text
+  decidedAt             DateTime?
+  executionVerifiedById Int?
+  executionVerifiedBy   User?                   @relation("PolicyExceptionExecutionVerifiedBy", fields: [executionVerifiedById], references: [id])
+  executionNote         String?                 @db.Text
+  executionVerifiedAt   DateTime?
+  events                PolicyExceptionEvent[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+
+  @@index([schoolId, branchId, classId, status])
+  @@index([routedRoleCode, status, createdAt])
+  @@index([requestedById, status])
+}
+
+model PolicyExceptionEvent {
+  id                Int                    @id @default(autoincrement())
+  policyExceptionId Int
+  policyException   PolicyException        @relation(fields: [policyExceptionId], references: [id], onDelete: Cascade)
+  actorUserId       Int?
+  actor             User?                  @relation("PolicyExceptionEventActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+  action            String                 @db.VarChar(80)
+  fromStatus        PolicyExceptionStatus?
+  toStatus          PolicyExceptionStatus?
+  note              String?                @db.Text
+  metadata          Json?
+  createdAt         DateTime               @default(now())
+
+  @@index([policyExceptionId, createdAt])
+  @@index([actorUserId, createdAt])
+}
+
+// Scoped administrative work item. This deliberately replaces the inherited
+// unrelated legal-services request route for school operational approvals.
+model OperationalRequest {
+  id            Int                        @id @default(autoincrement())
+  publicId      String                     @unique @default(uuid()) @db.Uuid
+  schoolId      Int
+  school        School                     @relation(fields: [schoolId], references: [id])
+  branchId      Int?
+  branch        SchoolBranch?              @relation(fields: [branchId], references: [id])
+  title         String                     @db.VarChar(160)
+  description   String?                    @db.Text
+  category      String                     @db.VarChar(100)
+  status        OperationalRequestStatus   @default(PENDING)
+  priority      OperationalRequestPriority @default(NORMAL)
+  requestedById Int
+  requestedBy   User                       @relation("OperationalRequestRequestedBy", fields: [requestedById], references: [id])
+  assignedToId  Int?
+  assignedTo    User?                      @relation("OperationalRequestAssignedTo", fields: [assignedToId], references: [id])
+  approvedById  Int?
+  approvedBy    User?                      @relation("OperationalRequestApprovedBy", fields: [approvedById], references: [id])
+  decisionNote  String?                    @db.VarChar(1000)
+  decidedAt     DateTime?
+  createdAt     DateTime                   @default(now())
+  updatedAt     DateTime                   @updatedAt
+
+  @@index([schoolId, branchId, status])
+  @@index([requestedById, status])
+  @@index([assignedToId, status])
+}
+
+model PrayerOathAssignment {
+  id        Int     @id @default(autoincrement())
+  studentId Int
+  student   Student @relation(fields: [studentId], references: [id])
+
+  branchId Int
+  branch   SchoolBranch @relation(fields: [branchId], references: [id])
+
+  classId Int
+  class   SchoolClass @relation(fields: [classId], references: [id])
+
+  role         DutyRole // ENUM: PRAYER or OATH
+  gender       Gender // Store for history query by gender
+  date         DateTime // Date of assignment
+  academicYear Int      @default(2025)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, date, role]) // Prevent same student from being double-assigned
+}
+
+enum DutyRole {
+  PRAYER
+  OATH
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model DailyHomeworkCompletion {
+  id        Int            @id @default(autoincrement())
+  student   Student        @relation(fields: [studentId], references: [id])
+  studentId Int
+  subjectId Int
+  subject   ClassSubject   @relation(fields: [subjectId], references: [id])
+  date      DateTime       @db.Date // ensures only date, no time
+  status    HomeworkStatus @default(PENDING)
+  class     SchoolClass    @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, subjectId, date])
+}
+
+enum HomeworkStatus {
+  PENDING
+  SUBMITTED
+  LATE
+  NEEDS_IMPROVEMENT
+  EXCELLENT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  HOLIDAY
+  WEEKLY_HOLIDAY
+}
+
+model Attendance {
+  id        Int     @id @default(autoincrement())
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId Int
+
+  class    SchoolClass @relation(fields: [classId], references: [id])
+  classId  Int
+  branchId Int
+  schoolId Int
+
+  date   DateTime         @db.Date // ensures only date, no time
+  status AttendanceStatus
+
+  leaveRequestId Int? // relation below
+  leaveRequest   LeaveRequest? @relation(fields: [leaveRequestId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, date]) // ensures no duplicate entries
+}
+
+model LeaveRequest {
+  id        Int     @id @default(autoincrement())
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  fromDate DateTime
+  toDate   DateTime
+  reason   String
+
+  approved     Boolean   @default(false)
+  approvedById Int? // ID of teacher who approved
+  approvedBy   User?     @relation("LeaveApprover", fields: [approvedById], references: [id])
+  approvedAt   DateTime?
+
+  createdAt DateTime @default(now())
+
+  Attendance Attendance[]
+}
+
+model HolidayCalendar {
+  id        Int      @id @default(autoincrement())
+  date      DateTime @db.Date
+  title     String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+}
+
+model SyllabusScheduleDailyPlan {
+  id             Int          @id @default(autoincrement())
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+
+  date       DateTime @db.Date // class-day
+  topicTitle String   @db.VarChar(200)
+
+  isCompleted    Boolean   @default(false)
+  completionDate DateTime?
+
+  articleLinks1             String? @db.VarChar(300) //         // [{ title, url }]
+  articleLinks2             String? @db.VarChar(300) //         // [{ title, url }]
+  videoLinks                String? @db.VarChar(300) //string YouTube URLs]
+  videoLinks2               String? @db.VarChar(300) //         // [string YouTube URLs]
+  instructions_for_students String? @db.Text
+  instructions_for_teachers String? @db.Text
+
+  isHoliday Boolean @default(false)
+  notes     String? @db.Text // Optional class/teacher notes
+
+  // 📚 Homework Section
+  homeworkDescription String?   @db.Text
+  homeworkDueDate     DateTime?
+
+  createdAt         DateTime                           @default(now())
+  updatedAt         DateTime                           @updatedAt
+  subjectSyllabus   SubjectSyllabus?                   @relation(fields: [syllabusId], references: [id]) // Use it null
+  syllabusId        Int? // link to master topic
+  branchCompletions SyllabusScheduleBranchCompletion[]
+
+  @@unique([classSubjectId, date])
+  @@index([classSubjectId])
+  @@index([date])
+}
+
+/// Completion is deliberately separate from the shared daily-plan template.
+/// The same plan can therefore be completed independently by each live
+/// school/branch without mutating another branch's progress.
+model SyllabusScheduleBranchCompletion {
+  id                 Int                       @id @default(autoincrement())
+  syllabusSchedule   SyllabusScheduleDailyPlan @relation(fields: [syllabusScheduleId], references: [id], onDelete: Cascade)
+  syllabusScheduleId Int
+  schoolId           Int
+  branchId           Int
+  completedAt        DateTime                  @default(now())
+  completedBy        User?                     @relation("SyllabusScheduleBranchCompletionBy", fields: [completedById], references: [id], onDelete: SetNull)
+  completedById      Int?
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+
+  @@unique([syllabusScheduleId, schoolId, branchId])
+  @@index([schoolId, branchId])
+  @@index([completedById])
+}
+
+model BiWeeklyHomeworkReview {
+  id Int @id @default(autoincrement())
+
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+
+  startDate DateTime // Start of the bi-weekly period
+  endDate   DateTime // End of the bi-weekly period
+
+  reviewedBy   User @relation(fields: [reviewedById], references: [id])
+  reviewedById Int
+
+  generalRemarks String? @db.Text
+  suggestions    String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentReviews StudentHomeworkReview[]
+
+  @@unique([classSubjectId, startDate, endDate])
+  @@index([classSubjectId])
+  @@index([startDate])
+}
+
+model StudentHomeworkReview {
+  id Int @id @default(autoincrement())
+
+  reviewPeriod   BiWeeklyHomeworkReview @relation(fields: [reviewPeriodId], references: [id])
+  reviewPeriodId Int
+
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  totalTopicsReviewed    Int
+  totalHomeworkCompleted Int
+  completionRate         Float // optional calculated %
+  remarks                String?      @db.Text
+  status                 ReviewStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([reviewPeriodId, studentId])
+  @@index([studentId])
+}
+
+enum ReviewStatus {
+  PENDING
+  COMPLETED
+  NEEDS_IMPROVEMENT
+  EXCELLENT
+}
+
+model Assignment {
+  id             Int          @id @default(autoincrement())
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+
+  title            String   @db.VarChar(100)
+  description      String   @db.Text
+  dueDate          DateTime
+  assignmentNumber Int? // 1 to 24 (per subject per year)
+
+  // 🔁 Bi-weekly grouping
+  biWeeklySlotStart DateTime
+  biWeeklySlotEnd   DateTime
+
+  marks     Json? // Optional if using rubric or structured marks
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  StudentAssignment StudentAssignment[]
+  SchoolClass       SchoolClass[]
+  Student           Student[]
+
+  @@unique([classSubjectId, assignmentNumber])
+}
+
+model StudentAssignment {
+  id           Int        @id @default(autoincrement())
+  assignment   Assignment @relation(fields: [assignmentId], references: [id])
+  assignmentId Int
+  student      Student    @relation(fields: [studentId], references: [id])
+  studentId    Int
+
+  submittedAt DateTime?
+  isSubmitted Boolean   @default(false)
+
+  // 📊 Between 0–3
+  marksObtained Float? // 0 to 3
+  remarks       String? @db.VarChar(100)
+
+  qualityTag AssignmentQualityTag? // Optional qualitative label
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, assignmentId])
+}
+
+enum AssignmentQualityTag {
+  EXCELLENT
+  GOOD
+  NEEDS_IMPROVEMENT
+  PLAGIARIZED
+  ILLEGIBLE_HANDWRITING // ✍️ Handwriting too poor to read
+  NO_STRUCTURE_OR_FORMAT // 😵 Just a wall of text, no paragraphs, bullets, or sections
+  LACKS_VISUAL_ELEMENTS // 📉 No diagrams, charts, or visual aids used
+  COPY_PASTE_FROM_BOOK // 📚 Looks lifted straight from textbook
+  VERY_SHORT_OR_INCOMPLETE // 📏 Minimal effort, partial answers
+  CREATIVELY_PRESENTED // 🌈 Nicely decorated or uniquely formatted
+  TOO_MUCH_DECORATION // 🖍️ Over-decorated, flashy but not focused
+  MISALIGNED_CONTENT // 📐 Answers not matching questions or misordered
+  CLARITY_LACKING // 🤯 Messy logic, unclear explanation
+  IMPROPER_LANGUAGE // 🗣️ Bad grammar, improper wording
+}
+
+model Test {
+  id             Int          @id @default(autoincrement())
+  title          String?      @db.VarChar(100) // ✅ Optional human-readable title
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+  testType       String       @db.VarChar(50) // e.g., 'BiWeekly', 'Monthly', 'Half-Yearly'
+
+  syllabus String? @db.VarChar(300) // ✅ Store covered topics
+  marks    Int? // ✅ Optional detailed rubric (Q1: 5, Q2: 10…)
+
+  biWeeklySlotStart DateTime // ✅ Allows you to group/test every 2 weeks
+  biWeeklySlotEnd   DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  TestMark    TestMark[]
+  SchoolClass SchoolClass[]
+  Student     Student[]
+}
+
+model TestMark {
+  id        Int     @id @default(autoincrement())
+  test      Test    @relation(fields: [testId], references: [id])
+  testId    Int
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  maxMarks Int     @default(30) // ✅ For flexibility if max changes in future
+  marks    Float // ✅ Can accept decimal for partial grading
+  remarks  String? @db.Text // ✅ Optional teacher feedback
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, testId]) // ✅ Prevents duplicate submissions
+}
+
+model Fee {
+  id        Int         @id @default(autoincrement())
+  student   Student     @relation(fields: [studentId], references: [id])
+  studentId Int
+  class     SchoolClass @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+  amount    Float
+  dueDate   DateTime
+  status    String      @db.VarChar(20)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Resource {
+  id        Int         @id @default(autoincrement())
+  student   Student?    @relation(fields: [studentId], references: [id])
+  studentId Int?
+  class     SchoolClass @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+  type      String      @db.VarChar(50)
+  content   Json?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model GuardianCommunicationLog {
+  id        Int         @id @default(autoincrement())
+  student   Student     @relation(fields: [studentId], references: [id])
+  studentId Int
+  class     SchoolClass @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+
+  communicationType CommunicationType // ENUM below
+  method            CommunicationMethod // ENUM below
+
+  summary String? @db.VarChar(200)
+  details Json? // optional structured info
+
+  recordedById Int? // Teacher/Admin (User ID)
+  recordedAt   DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum GuardianSpecialNotePriority {
+  NORMAL
+  HIGH
+  URGENT
+}
+
+// A private, student-specific note for the GCI/guardian-care team. This is
+// intentionally separate from a general communication or PTM record so that
+// an important guardian instruction, risk, or follow-up is never lost inside
+// an unrelated call summary.
+model GuardianStudentSpecialNote {
+  id           Int                         @id @default(autoincrement())
+  student      Student                     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId    Int
+  class        SchoolClass                 @relation(fields: [classId], references: [id], onDelete: Restrict)
+  classId      Int
+  schoolId     Int
+  branchId     Int
+  note         String                      @db.Text
+  priority     GuardianSpecialNotePriority @default(NORMAL)
+  isResolved   Boolean                     @default(false)
+  createdBy    User?                       @relation("GuardianSpecialNoteCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  createdById  Int?
+  createdAt    DateTime                    @default(now())
+  resolvedBy   User?                       @relation("GuardianSpecialNoteResolvedBy", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolvedById Int?
+  resolvedAt   DateTime?
+  updatedAt    DateTime                    @updatedAt
+
+  @@index([studentId, isResolved, createdAt])
+  @@index([schoolId, branchId, classId, priority])
+}
+
+model GuardianCallLog {
+  id               Int         @id @default(autoincrement())
+  student          Student     @relation(fields: [studentId], references: [id])
+  studentId        Int
+  class            SchoolClass @relation(fields: [classId], references: [id])
+  classId          Int
+  branchId         Int
+  schoolId         Int
+  reportWeekStart  DateTime
+  reportWeekEnd    DateTime
+  callDate         DateTime
+  calledById       Int?
+  issuesDiscussed  Json?
+  guardianResponse String?     @db.Text
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([studentId, reportWeekStart, reportWeekEnd])
+}
+
+model ParentTeacherMeetingNote {
+  id        Int         @id @default(autoincrement())
+  student   Student     @relation(fields: [studentId], references: [id])
+  studentId Int
+  class     SchoolClass @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+
+  meetingDate DateTime
+  takenById   Int? // Teacher/Admin User
+
+  guardianInstruction String? @db.VarChar(500)
+  summary_realization String? @db.VarChar(300) // from guardian instructions 
+  actionPoints        Json? // [{ action: "Improve punctuality", dueBy: "2025-08-01" }]
+
+  guardianFeedback String? @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studentId, meetingDate])
+}
+
+enum CommunicationType {
+  GENERAL
+  ALERT
+  CALL
+  SMS
+  EMAIL
+  MEETING
+}
+
+enum CommunicationMethod {
+  PHONE
+  SMS
+  WHATSAPP
+  EMAIL
+  IN_PERSON
+}
+
+model PublicSpeakingOccasion {
+  id           Int         @id @default(autoincrement())
+  title        String      @db.VarChar(100) // e.g., "Independence Day Speech"
+  description  String?     @db.Text
+  occasionDate DateTime
+  classId      Int
+  class        SchoolClass @relation(fields: [classId], references: [id])
+  schoolId     Int
+  branchId     Int
+
+  languageMedium LanguageMedium // ENUM: BENGALI / HINDI / ENGLISH
+  isActive       Boolean        @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studentSubmissions PublicSpeechSubmission[]
+}
+
+model PublicSpeechSubmission {
+  id         Int                    @id @default(autoincrement())
+  studentId  Int
+  student    Student                @relation(fields: [studentId], references: [id])
+  occasionId Int
+  occasion   PublicSpeakingOccasion @relation(fields: [occasionId], references: [id])
+
+  title    String         @db.VarChar(100) // e.g., "My India – My Pride"
+  language LanguageMedium
+
+  youtubeLink   String? @db.VarChar(300)
+  facebookLink  String? @db.VarChar(300)
+  instagramLink String? @db.VarChar(300)
+
+  // 👑 These will be computed periodically (from APIs or manual update)
+  youtubeViews   Int? @default(0)
+  facebookViews  Int? @default(0)
+  instagramViews Int? @default(0)
+
+  isFirstPlaceYouTube   Boolean @default(false)
+  isFirstPlaceInstagram Boolean @default(false)
+  isFirstPlaceFacebook  Boolean @default(false)
+
+  submittedAt         DateTime @default(now())
+  approvedByTeacherId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, occasionId])
+}
+
+enum LanguageMedium {
+  BENGALI
+  HINDI
+  ENGLISH
+}
+
+model KnightsCdtpSession {
+  id          Int         @id @default(autoincrement())
+  classId     Int
+  class       SchoolClass @relation(fields: [classId], references: [id])
+  schoolId    Int
+  branchId    Int
+  sessionDate DateTime // date of delivery
+
+  sessionType KnightsCdtpType // ENUM (below)
+  title       String          @db.VarChar(100) // optional override e.g. “Rise After Failure”
+  content     String?         @db.Text // inspirational message, career tip etc.
+
+  videoLink   String? @db.VarChar(300) // e.g., YouTube motivational video
+  articleLink String? @db.VarChar(300) // link to story or pdf
+  imageUrl    String? @db.VarChar(300) // cover image if needed
+
+  isUnlocked   Boolean @default(false) // if this is unlockable content
+  unlockReason String? @db.VarChar(200) // e.g., “Today is Exam Day”, “Monthly Reward”
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classId, sessionDate])
+  @@index([schoolId])
+  @@index([branchId])
+}
+
+enum KnightsCdtpType {
+  MOTIVATIONAL_STORY // 'Motivational Story of the Day V'
+  TALENT_ZONE_UNLOCK // 'Unlock My Talent Zone Today V'
+  CAREER_FLASHCARD // 'Career Flashcards: What Can I Become? V'
+  SUPER_HABIT // 'Super Habits Unlockable Today V'
+  CHARACTER_LESSON // 'Knightly Character Lesson of the Week V'
+}
+
+model Analytic {
+  id        Int         @id @default(autoincrement())
+  class     SchoolClass @relation(fields: [classId], references: [id])
+  classId   Int
+  branchId  Int
+  schoolId  Int
+  type      String      @db.VarChar(50) // e.g., "monthly_summary"
+  data      Json?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Routine {
+  id             Int           @id @default(autoincrement())
+  class          SchoolClass   @relation(fields: [classId], references: [id])
+  classId        Int
+  branchId       Int
+  schoolId       Int
+  day            String        @db.VarChar(20) // e.g., "Monday"
+  startTime      String        @db.VarChar(10) // e.g., "09:00"
+  endTime        String        @db.VarChar(10) // e.g., "10:00"
+  subjectId      Int? // Optional link to Subject
+  classSubject   ClassSubject? @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model SemesterResult {
+  id                Int          @id @default(autoincrement())
+  student           Student      @relation(fields: [studentId], references: [id])
+  studentId         Int
+  classSubject      ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId    Int
+  classId           Int
+  branchId          Int
+  schoolId          Int
+  subjectId         Int
+  semester          SemesterType
+  // 📊 Components
+  semesterExamMarks Float // out of 70
+  vivaMarks         Float // out of 6
+  internalMarks     Float // out of 24 (from Assignments Total Marks in  top 1-8 9-16 17-24 assigns  avg/conversion)
+  totalMarks        Float // Calculated: 70+6+24 = 100
+  remarks           String?      @db.Text
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@unique([studentId, classSubjectId, semester])
+}
+
+enum SemesterType {
+  SEMESTER_I
+  SEMESTER_II
+  SEMESTER_III
+}
+
+model SemesterExamSchedule {
+  id             Int          @id @default(autoincrement())
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+  classId        Int
+  class          SchoolClass  @relation(fields: [classId], references: [id])
+  subjectId      Int
+  schoolId       Int
+  semester       SemesterType
+
+  examDate        DateTime // Full date and time (exam start)
+  durationMinutes Int // Duration in minutes
+  examHall        String?  @db.VarChar(100) // optional room/hall info
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([classSubjectId, semester]) // prevent duplicates
+  @@index([classId])
+  @@index([semester])
+}
+
+model SubjectSyllabus {
+  id             Int          @id @default(autoincrement())
+  subjectId      Int
+  subject        ClassSubject @relation(fields: [subjectId], references: [id])
+  topic          String       @db.VarChar(200)
+  isCompleted    Boolean      @default(false)
+  completionDate DateTime?
+  lectureContent String?      @db.Text // Pre-recorded lecture content or YouTube URL
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  SyllabusScheduleDailyPlan SyllabusScheduleDailyPlan[]
+}
+
+model Department {
+  id               Int             @id @default(autoincrement())
+  school           School          @relation(fields: [schoolId], references: [id])
+  schoolId         Int
+  class            SchoolClass?    @relation(fields: [classId], references: [id])
+  classId          Int?
+  name             String          @db.VarChar(100)
+  description      String?         @db.VarChar(500)
+  slug             String          @unique @db.VarChar(100)
+  type             DepartmentType?
+  image            String?         @db.VarChar(500)
+  regionVisibility Json?
+  seoMeta          Json?
+  translations     Json?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  curriculum       String?         @db.VarChar(255)
+  gradeLevels      String?         @db.VarChar(255)
+  capacity         Int?
+  facilities       Json?
+}
+
+enum DepartmentType {
+  ACADEMIC
+  ADMINISTRATION
+  DISTRICT_CONTROLLER
+  STATE_CONTROLLER
+  EXTRACURRICULAR
+  SPECIAL_EDUCATION
+  VOCATIONAL_TRAINING
+  GUIDANCE_COUNSELING
+  LIBRARY_SERVICES
+  TECHNICAL_SUPPORT
+  STUDENT_WELFARE
+  INTERN_FACULTY
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  GROUP_CEO
+  BOARD_OF_DIRECTORS
+  REGIONAL_DIRECTOR
+  DISTRICT_MANAGER
+  TRANSPORT_MANAGER
+  INFRASTRUCTURE_MANAGER
+  EVENT_COORDINATOR
+  MEDIA_COORDINATOR
+  LEGAL_COMPLIANCE_OFFICER
+  STATE_EXPANSION_HEAD
+  BRANCH_DEVELOPMENT_OFFICER
+  FRANCHISE_SUPPORT_MANAGER
+  STUDENT_WELFARE_OFFICER
+  SCHOOL_MARKETING_MANAGER
+  AIC_JUNIOR
+  AIC_SENIOR
+  GCI
+  SIC
+  //////////////////////////////////////////
+  FMO
+  FINANCE_MANAGEMENT_OFFICER // Saturday Office Duty & Rounding Duty System of Faculties
+  HEAD_OF_DEPARTMENTS // Principle
+  //////////////////////////////////////////
+  ACADEMICS_IN_CHARGE // Student Homework Review
+  SYSTEM_IN_CHARGE // Overall Uniform of System
+  GUARDIAN_COMMUNICATION_IN_CHARGE // 24 Hour Office or Side Duty
+  TEACHER
+  INTERN
+  STAFF
+  TEACHER_IN_CHARGE // Junior to Train Teachers the Discipline
+  PRINCIPAL_HEAD // Saturday Office Duty & Rounding Duty Assignment Review & Overall Education & System of both Students & Faculties
+  ASSISTANT_TEACHER
+  LIBRARIAN
+  EXAM_CONTROLLER
+  ACADEMIC_RESEARCHER
+  HR_OFFICER
+  SECURITY_HEAD
+}
+
+enum SalarySystem {
+  Weekly
+  Monthly
+  Daily
+}
+
+enum AccessScopeType {
+  GLOBAL
+  SCHOOL
+  BRANCH
+  CLASS
+}
+
+// Phase 2 enterprise foundation. These values are additive and do not replace
+// the legacy School / SchoolBranch / SchoolClass hierarchy.
+enum EnterpriseScopeStatus {
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+}
+
+enum PermissionRiskLevel {
+  STANDARD
+  HIGH
+  CRITICAL
+}
+
+enum AccessPolicyStatus {
+  DRAFT
+  ACTIVE
+  RETIRED
+}
+
+enum EnterpriseAuditOutcome {
+  SUCCESS
+  DENIED
+  FAILED
+}
+
+enum WorkforceAssignmentKind {
+  ADMINISTRATIVE
+  TEACHER
+  CLASS_TEACHER
+  SUBJECT_TEACHER
+}
+
+enum WorkforceAssignmentSource {
+  RBAC_ROLE
+  BRANCH_ROLE
+  CLASS_TEACHER
+  CLASS_SUBJECT
+  TEACHER_SUBJECT
+  LEGACY_USER
+  MANUAL
+}
+
+model User {
+  id                                   Int                                   @id @default(autoincrement())
+  img_url                              String?                               @db.VarChar(500)
+  username                             String?                               @db.VarChar(255)
+  email                                String                                @unique
+  password                             String?                               @db.VarChar(255)
+  passwordActivationCodeHash           String?                               @db.VarChar(255)
+  passwordActivationExpiresAt          DateTime?
+  passwordActivatedAt                  DateTime?
+  reset_password_token                 String?                               @db.VarChar(255)
+  registration_token                   String?                               @db.VarChar(255)
+  is_active                            Boolean?                              @default(true)
+  blocked                              Boolean?                              @default(false)
+  prefered_language                    String?                               @db.VarChar(255)
+  created_at                           DateTime?                             @db.Timestamp(6)
+  updated_at                           DateTime?                             @db.Timestamp(6)
+  created_by_id                        Int?
+  updated_by_id                        Int?
+  role                                 UserRole?
+  role_teacher                         UserRole?
+  department                           DepartmentType?
+  confirmation_token                   String?                               @db.VarChar(255)
+  rfid_card_no                         String?                               @db.VarChar(20)
+  confirmed                            Boolean?                              @default(false)
+  biometric_id                         String?                               @db.VarChar(255)
+  aggrement_work_hours_per_day         Decimal?                              @db.Decimal(10, 2)
+  base_salary                          Decimal?                              @db.Decimal(10, 2)
+  base_salary_per_day                  Decimal?                              @db.Decimal(10, 2)
+  extra_per_half_hour_salary           Decimal?                              @db.Decimal(10, 2)
+  regular_entry_time                   String?                               @db.VarChar(8)
+  regular_leave_time                   String?                               @db.VarChar(8)
+  salary_system                        SalarySystem?
+  per_day_bonus_salary                 Decimal?                              @db.Decimal(10, 2)
+  per_day_salary                       Decimal?                              @db.Decimal(10, 2)
+  published_at                         DateTime?                             @db.Timestamp(6)
+  clg_name                             String?                               @db.VarChar(255)
+  highest_degree                       String?                               @db.VarChar(255)
+  highest_marks                        String?                               @db.VarChar(255)
+  years_experience                     Int?
+  specialization                       String?                               @db.VarChar(255)
+  bio                                  String?                               @db.Text
+  languages_known                      String?                               @db.VarChar(255)
+  bar_registration_no                  String?                               @db.VarChar(50)
+  address                              String?                               @db.VarChar(255)
+  fatherName                           String?                               @db.VarChar(255)
+  motherName                           String?                               @db.VarChar(255)
+  phone1                               BigInt?
+  phone2                               BigInt?
+  phone3                               BigInt?
+  uid_aadhar                           BigInt?
+  village                              String?                               @db.VarChar(255)
+  block                                String?                               @db.VarChar(255)
+  municiple                            String?                               @db.VarChar(255)
+  police_station                       String?                               @db.VarChar(255)
+  district                             String?                               @db.VarChar(255)
+  state                                String?                               @db.VarChar(255)
+  country                              String?                               @db.VarChar(255)
+  pincode                              String?                               @db.VarChar(20)
+  phone_prefix                         String?                               @db.VarChar(20)
+  whatsapp                             String?                               @db.VarChar(20)
+  aadhar_verified                      Boolean?                              @default(false)
+  branchId                             Int?
+  branch                               SchoolBranch?                         @relation(fields: [branchId], references: [id])
+  schoolId                             Int?
+  school                               School?                               @relation(fields: [schoolId], references: [id])
+  classesLed                           SchoolClass[]                         @relation("ClassTeacherLeader")
+  dutyAssignments                      DutyAssignment[]
+  branchRoleAssignments                BranchRoleAssignment[]
+  accessRoleAssignments                UserAccessRole[]                      @relation("UserAccessRoleUser")
+  workforceAssignments                 WorkforceAssignment[]                 @relation("WorkforceAssignmentUser")
+  classSubjects                        ClassSubject[]                        @relation("AssignedTeacher")
+  teacherAssignmentsAssignedBy         TeacherSubjectAssignment[]            @relation("AssignmentGivenBy")
+  teacherAssignments                   TeacherSubjectAssignment[]            @relation("AssignedTeacher")
+  companyExperience                    TeacherCompanyExperience[]
+  certifications                       TeacherCertification[]
+  specializationTags                   TeacherProfileSpecializationTag[]
+  sportsEvents                         SportsEvent[]                         @relation("EventManager")
+  created_by                           User?                                 @relation("User_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction)
+  created_users                        User[]                                @relation("User_created_by_idToUser")
+  updated_by                           User?                                 @relation("User_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction)
+  updated_users                        User[]                                @relation("User_updated_by_idToUser")
+  attendance_logs                      employee_attendance_logs[]            @relation("employee_attendance_logs_created_by_idToUser")
+  attendance_logs_updated              employee_attendance_logs[]            @relation("employee_attendance_logs_updated_by_idToUser")
+  employee_salaries_created            employee_salaries[]                   @relation("employee_salaries_created_by_idToUser")
+  employee_salaries_updated            employee_salaries[]                   @relation("employee_salaries_updated_by_idToUser")
+  files_created                        files[]                               @relation("files_created_by_idToUser")
+  files_updated                        files[]                               @relation("files_updated_by_idToUser")
+  fleet_vehicles_created               fleet_logistics_vehicles[]            @relation("fleet_logistics_vehicles_created_by_idToUser")
+  fleet_vehicles_updated               fleet_logistics_vehicles[]            @relation("fleet_logistics_vehicles_updated_by_idToUser")
+  hr_reports_created                   hr_reports_collections[]              @relation("hr_reports_collections_created_by_idToUser")
+  hr_reports_updated                   hr_reports_collections[]              @relation("hr_reports_collections_updated_by_idToUser")
+  i18n_locale_created                  i18n_locale[]                         @relation("i18n_locale_created_by_idToUser")
+  i18n_locale_updated                  i18n_locale[]                         @relation("i18n_locale_updated_by_idToUser")
+  salary_paid_logs                     salary_paid_logs[]
+  salary_to_whom_paid_logs             salary_paid_logs[]                    @relation("UserToSalaryLogs")
+  fleet_vehicles                       FleetVehicle[]                        @relation("DriverAssigned")
+  districts                            District[]
+  states                               State[]
+  communication_logs                   CommunicationLog[]
+  team_members                         TeamMember[]
+  team_leads                           TeamMember[]                          @relation("TeamLead")
+  attendance_logs_user                 employee_attendance_logs[]            @relation("UserToAttendanceLogs")
+  employee_salaries_user               employee_salaries[]                   @relation("UserToSalaryLogs")
+  service_reviews                      ServiceReview[]
+  job_applications                     JobApplication[]
+  job_applications_created             JobApplication[]                      @relation("JobApplicationCreatedBy")
+  job_applications_updated             JobApplication[]                      @relation("JobApplicationUpdatedBy")
+  employee_salaries_employee_id_links  employee_salaries_employee_id_links[] @relation(map: "employee_salaries_employee_id_links_user_fk")
+  LeaveRequest                         LeaveRequest[]                        @relation("LeaveApprover")
+  BiWeeklyHomeworkReview               BiWeeklyHomeworkReview[]
+  handledSchoolConcerns                SchoolConcern[]                       @relation("SchoolConcernHandledBy")
+  requestedOperationalRequests         OperationalRequest[]                  @relation("OperationalRequestRequestedBy")
+  assignedOperationalRequests          OperationalRequest[]                  @relation("OperationalRequestAssignedTo")
+  approvedOperationalRequests          OperationalRequest[]                  @relation("OperationalRequestApprovedBy")
+  requestedPolicyExceptions            PolicyException[]                     @relation("PolicyExceptionRequestedBy")
+  decidedPolicyExceptions              PolicyException[]                     @relation("PolicyExceptionDecidedBy")
+  executionVerifiedPolicyExceptions    PolicyException[]                     @relation("PolicyExceptionExecutionVerifiedBy")
+  policyExceptionEvents                PolicyExceptionEvent[]                @relation("PolicyExceptionEventActor")
+  provisionalCollectionsCollected      ProvisionalFeeCollection[]            @relation("ProvisionalFeeCollectionCollector")
+  provisionalCollectionsHandedOver     ProvisionalFeeCollection[]            @relation("ProvisionalFeeCollectionHandoverBy")
+  provisionalCollectionsVerified       ProvisionalFeeCollection[]            @relation("ProvisionalFeeCollectionVerifier")
+  provisionalCollectionsBankSubmitted  ProvisionalFeeCollection[]            @relation("ProvisionalFeeCollectionBankSubmittedBy")
+  provisionalCollectionsReceived       ProvisionalFeeCollection[]            @relation("ProvisionalFeeCollectionReceivedBy")
+  guardianSpecialNotesCreated          GuardianStudentSpecialNote[]          @relation("GuardianSpecialNoteCreatedBy")
+  guardianSpecialNotesResolved         GuardianStudentSpecialNote[]          @relation("GuardianSpecialNoteResolvedBy")
+  studentEnrollmentsCreated            StudentEnrollment[]                   @relation("StudentEnrollmentCreatedBy")
+  transferCertificateRequestsInitiated TransferCertificateRequest[]          @relation("TransferCertificateRequestInitiatedBy")
+  transferCertificateRequestsPrincipal TransferCertificateRequest[]          @relation("TransferCertificateRequestPrincipalDecisionBy")
+  transferCertificateRequestsFinance   TransferCertificateRequest[]          @relation("TransferCertificateRequestFinanceVerifiedBy")
+  transferCertificateRequestsIssued    TransferCertificateRequest[]          @relation("TransferCertificateRequestIssuedBy")
+  transferCertificateFeedbackRecorded  TransferCertificateFeedback[]         @relation("TransferCertificateFeedbackRecordedBy")
+  schoolMediaEvidenceSubmitted         SchoolMediaEvidence[]                 @relation("SchoolMediaEvidenceSubmittedBy")
+  schoolMediaEvidenceReviewed          SchoolMediaEvidence[]                 @relation("SchoolMediaEvidenceReviewedBy")
+  syllabusScheduleBranchCompletions    SyllabusScheduleBranchCompletion[]    @relation("SyllabusScheduleBranchCompletionBy")
+  employee_attendance_logs_user_links  employee_attendance_logs_user_links[]
+
+  @@index([role])
+  @@index([department])
+}
+
+model BoardExam {
+  id             Int          @id @default(autoincrement())
+  title          String       @db.VarChar(100) // e.g., "Final Board Exam - English"
+  classSubject   ClassSubject @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int
+
+  examDate     DateTime
+  totalMarks   Int      @default(100)
+  syllabus     String?  @db.VarChar(300)
+  academicYear Int      @default(2025)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  BoardExamResult BoardExamResult[]
+
+  @@unique([classSubjectId, title]) // One title per subject
+}
+
+model BoardExamResult {
+  id          Int       @id @default(autoincrement())
+  boardExam   BoardExam @relation(fields: [boardExamId], references: [id])
+  boardExamId Int
+
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId Int
+
+  writtenMarks Float // Out of 90
+  oralMarks    Float // Out of 10
+  totalMarks   Float // Optional derived: written + oral
+  remarks      String? @db.VarChar(200)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, boardExamId]) // Prevents duplicate results
+}
+
+model RoleDuty {
+  id              Int              @id @default(autoincrement())
+  role            UserRole
+  description     String           @db.Text
+  scope           String           @db.VarChar(50)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  dutyAssignments DutyAssignment[]
+
+  @@unique([role, description])
+  @@index([role])
+}
+
+model DutyAssignment {
+  id         Int          @id @default(autoincrement())
+  user       User         @relation(fields: [userId], references: [id])
+  userId     Int
+  roleDuty   RoleDuty     @relation(fields: [roleDutyId], references: [id])
+  roleDutyId Int
+  class      SchoolClass? @relation(fields: [classId], references: [id])
+  classId    Int?
+  branchId   Int?
+  schoolId   Int?
+  startDate  DateTime?
+  endDate    DateTime?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([roleDutyId])
+  @@index([classId])
+  @@index([branchId])
+}
+
+model BranchRoleAssignment {
+  id        Int          @id @default(autoincrement())
+  user      User         @relation(fields: [userId], references: [id])
+  userId    Int
+  branch    SchoolBranch @relation(fields: [branchId], references: [id])
+  branchId  Int
+  schoolId  Int
+  role      UserRole
+  startDate DateTime?
+  endDate   DateTime?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@unique([branchId, role])
+  @@index([userId])
+  @@index([branchId])
+  @@index([role])
+}
+
+model SportsEvent {
+  id             Int           @id @default(autoincrement())
+  class          SchoolClass   @relation(fields: [classId], references: [id])
+  classId        Int
+  classSubject   ClassSubject? @relation(fields: [classSubjectId], references: [id])
+  classSubjectId Int?
+  branchId       Int
+  schoolId       Int
+  name           String        @db.VarChar(100)
+  type           String        @db.VarChar(50)
+  date           DateTime
+  liveStreamUrl  String?       @db.VarChar(300)
+  participants   Json?
+  results        Json?
+  manager        User?         @relation("EventManager", fields: [managerId], references: [id])
+  managerId      Int?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([classId])
+  @@index([branchId])
+  @@index([schoolId])
+  @@index([managerId])
+}
+
+model TeacherSubjectAssignment {
+  id           Int      @id @default(autoincrement())
+  teacher      User     @relation("AssignedTeacher", fields: [teacherId], references: [id])
+  teacherId    Int
+  subjectId    Int
+  assignedBy   User?    @relation("AssignmentGivenBy", fields: [assignedById], references: [id])
+  assignedById Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([teacherId, subjectId])
+  @@index([teacherId])
+  @@index([subjectId])
+}
+
+// Compatibility-safe workforce ledger. Existing UserAccessRole, SchoolClass,
+// ClassSubject, and TeacherSubjectAssignment records remain the source inputs
+// during rollout and are mirrored here by the Phase 3 sync script.
+model WorkforceAssignment {
+  id              Int                       @id @default(autoincrement())
+  publicId        String                    @unique @default(uuid()) @db.Uuid
+  userId          Int
+  assignmentKind  WorkforceAssignmentKind
+  roleCode        String?                   @db.VarChar(100)
+  schoolId        Int?
+  branchId        Int?
+  departmentId    Int?
+  classId         Int?
+  subjectId       Int?
+  classSubjectId  Int?
+  source          WorkforceAssignmentSource
+  sourceReference String                    @unique @db.VarChar(160)
+  startsAt        DateTime?
+  endsAt          DateTime?
+  isActive        Boolean                   @default(true)
+  assignedById    Int?
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @updatedAt
+  user            User                      @relation("WorkforceAssignmentUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isActive])
+  @@index([assignmentKind, isActive])
+  @@index([schoolId, branchId, classId])
+  @@index([classSubjectId])
+  @@index([source, isActive])
+}
+
+model TeacherCompanyExperience {
+  id                Int       @id @default(autoincrement())
+  userId            Int
+  user              User      @relation(fields: [userId], references: [id])
+  company_name      String
+  position          String
+  start_date        DateTime
+  end_date          DateTime?
+  currently_working Boolean   @default(false)
+  description       String?
+
+  @@index([userId])
+}
+
+model TeacherCertification {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  user            User      @relation(fields: [userId], references: [id])
+  cert_title      String
+  issued_by       String
+  issue_date      DateTime
+  expiry_date     DateTime?
+  certificate_url String?
+
+  @@index([userId])
+}
+
+// New: TeacherProfileSpecializationTag (unchanged, but included for completeness)
+model TeacherProfileSpecializationTag {
+  id     Int               @id @default(autoincrement())
+  userId Int
+  user   User              @relation(fields: [userId], references: [id])
+  tagId  Int
+  tag    SpecializationTag @relation(fields: [tagId], references: [id])
+
+  @@index([userId])
+  @@index([tagId])
+}
+
+// New: SpecializationTag (unchanged, but included for completeness)
+model SpecializationTag {
+  id                 Int                               @id @default(autoincrement())
+  name               String                            @unique
+  slug               String                            @unique
+  specializationTags TeacherProfileSpecializationTag[]
+}
+
+model JobApplication {
+  id                Int       @id @default(autoincrement())
+  firstName         String    @db.VarChar(255)
+  lastName          String?   @db.VarChar(255)
+  email             String    @db.VarChar(255)
+  phone             String?   @db.VarChar(20)
+  phonePrefix       String?   @db.VarChar(20)
+  uid_aadhar        BigInt?
+  address           String?   @db.Text
+  village           String?   @db.VarChar(255)
+  block             String?   @db.VarChar(255)
+  municipality      String?   @db.VarChar(255)
+  policeStation     String?   @db.VarChar(255)
+  district          String?   @db.VarChar(255)
+  state             String?   @db.VarChar(255)
+  country           String?   @db.VarChar(255)
+  pincode           String?   @db.VarChar(20)
+  resumeUrl         String?   @db.VarChar(500)
+  coverLetterUrl    String?   @db.VarChar(500)
+  certificates      String[]
+  clgName           String?   @db.VarChar(255)
+  highestDegree     String?   @db.VarChar(255)
+  highestMarks      String?   @db.VarChar(255)
+  yearsExperience   Int?
+  specialization    String?   @db.VarChar(255)
+  barRegistrationNo String?   @db.VarChar(50)
+  languagesKnown    String[]
+  role              String    @db.VarChar(255)
+  department        String?   @db.VarChar(255)
+  workTypeId        Int?
+  brandId           Int?
+  status            AppStatus @default(SUBMITTED)
+  comments          String?   @db.Text
+  createdAt         DateTime  @default(now()) @db.Timestamp(6)
+  updatedAt         DateTime  @updatedAt @db.Timestamp(6)
+  createdById       Int?
+  updatedById       Int?
+  userId            Int?      @unique
+  interviewDateTime DateTime?
+  user              User?     @relation(fields: [userId], references: [id])
+  createdBy         User?     @relation("JobApplicationCreatedBy", fields: [createdById], references: [id])
+  updatedBy         User?     @relation("JobApplicationUpdatedBy", fields: [updatedById], references: [id])
+}
+
+model FleetVehicle {
+  id                 Int              @id @default(autoincrement())
+  schoolId           Int
+  branchId           Int
+  school             School           @relation(fields: [schoolId], references: [id])
+  branch             SchoolBranch     @relation(fields: [branchId], references: [id])
+  // Identification
+  registrationNumber String           @unique
+  chassisNumber      String           @unique
+  engineNumber       String           @unique
+  vinNumber          String?          @unique
+  vehicleType        VehicleType // CAR, TRUCK, VAN, etc.
+  make               String // e.g. Tata, Toyota
+  model              String // e.g. Ace, Fortuner
+  variant            String? // e.g. Diesel Auto
+  fuelType           FuelType // PETROL, DIESEL, EV, HYBRID
+  transmissionType   TransmissionType // MANUAL, AUTOMATIC
+  color              String?
+  seatingCapacity    Int
+  loadingCapacityKg  Int? // For trucks, payload in kg
+
+  // Legal & Compliance
+  registrationDate      DateTime
+  modelYear             Int
+  rcExpiryDate          DateTime
+  fitnessExpiryDate     DateTime
+  insuranceCompany      String?
+  insurancePolicyNumber String?
+  insuranceExpiryDate   DateTime
+  pucExpiryDate         DateTime
+  permitType            String? // e.g. National, State
+  permitExpiryDate      DateTime
+
+  // Operational Tracking
+  odometer           Int       @default(0)
+  lastServiceDate    DateTime?
+  nextServiceDueDate DateTime?
+  warrantyExpiryDate DateTime?
+  leaseExpiryDate    DateTime?
+
+  // Status & Lifecycle
+  status           VehicleStatus @default(ACTIVE)
+  ownershipType    OwnershipType // OWNED, LEASED, RENTED
+  decommissionDate DateTime?
+  remarks          String?
+
+  // Relational
+  assignedDriverId  Int?
+  assignedDriver    User?             @relation("DriverAssigned", fields: [assignedDriverId], references: [id])
+  depotId           Int?
+  depot             Depot?            @relation(fields: [depotId], references: [id])
+  documents         VehicleDocument[]
+  maintenanceLogs   MaintenanceLog[]
+  gpsDeviceId       String? // External GPS system ID
+  telematicsProfile Json?
+
+  // Admin
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId, branchId])
+}
+
+model Depot {
+  id            Int          @id @default(autoincrement())
+  schoolId      Int
+  branchId      Int
+  school        School       @relation(fields: [schoolId], references: [id])
+  branch        SchoolBranch @relation(fields: [branchId], references: [id])
+  name          String
+  location      String // City, GPS coordinates, etc.
+  address       String?
+  contactNumber String?
+
+  vehicles FleetVehicle[] // One-to-many: One depot can have many vehicles
+
+  @@unique([schoolId, branchId, name])
+  @@index([schoolId, branchId])
+}
+
+enum VehicleType {
+  CAR
+  SUV
+  VAN
+  TRUCK
+  PICKUP
+  BIKE
+  ELECTRIC_CAR
+  BUS
+  FORKLIFT
+  TRACTOR
+  OTHER
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
+  ELECTRIC
+  HYBRID
+  CNG
+  LPG
+  OTHER
+}
+
+enum TransmissionType {
+  MANUAL
+  AUTOMATIC
+  SEMI_AUTOMATIC
+  CVT
+  OTHER
+}
+
+enum OwnershipType {
+  OWNED
+  LEASED
+  RENTED
+  FINANCED
+}
+
+enum VehicleStatus {
+  ACTIVE
+  IN_MAINTENANCE
+  DECOMMISSIONED
+  SOLD
+  SCRAPPED
+}
+
+model VehicleDocument {
+  id        Int          @id @default(autoincrement())
+  vehicleId Int
+  vehicle   FleetVehicle @relation(fields: [vehicleId], references: [id])
+
+  type        DocumentType
+  documentUrl String
+  fileName    String?
+  uploadedBy  String?
+  uploadedAt  DateTime     @default(now())
+}
+
+enum DocumentType {
+  RC
+  INSURANCE
+  FITNESS
+  PUC
+  PERMIT
+  INVOICE
+  LEASE_AGREEMENT
+  WARRANTY
+  SERVICE_HISTORY
+  OTHER
+}
+
+model MaintenanceLog {
+  id        Int          @id @default(autoincrement())
+  vehicleId Int
+  vehicle   FleetVehicle @relation(fields: [vehicleId], references: [id])
+
+  serviceType   String // e.g. Oil Change, Brake Check
+  description   String?
+  serviceDate   DateTime
+  serviceCenter String?
+  cost          Float?
+  nextDueDate   DateTime?
+  odoAtService  Int?
+  createdAt     DateTime  @default(now())
+}
+
+model employee_salaries_employee_id_links {
+  id                    Int                @id @default(autoincrement())
+  employee_salary_id    Int?
+  user_id               Int
+  employee_salary_order Float?
+  employee_salaries     employee_salaries? @relation(fields: [employee_salary_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "employee_salaries_employee_id_links_fk")
+  User                  User               @relation(fields: [user_id], references: [id], onDelete: Cascade, map: "employee_salaries_employee_id_links_user_fk")
+}
+
+model User_roles_links {
+  id         Int    @id @default(autoincrement())
+  user_id    Int?
+  role_id    Int?
+  role_order Float?
+  user_order Float?
+
+  @@unique([user_id, role_id], map: "User_roles_links_unique")
+  @@index([user_id], map: "User_roles_links_fk")
+  @@index([role_id], map: "User_roles_links_inv_fk")
+  @@index([role_order], map: "User_roles_links_order_fk")
+  @@index([user_order], map: "User_roles_links_order_inv_fk")
+}
+
+model site_homepage_carousel {
+  id      Int     @id @default(autoincrement())
+  img_url String? @db.VarChar(500) // FOr app img
+}
+
+model employee_attendance_logs {
+  // emplooyee attendance salary logs
+  id                                                Int                                       @id @default(autoincrement())
+  user_id                                           Int?
+  user                                              User?                                     @relation("UserToAttendanceLogs", fields: [user_id], references: [id], onDelete: SetNull)
+  date                                              DateTime?                                 @db.Date
+  entry_time                                        String?                                   @db.VarChar(8) // For "HH:mm:ss"
+  leave_time                                        String?                                   @db.VarChar(8)
+  total_hours                                       Decimal?                                  @db.Decimal(10, 2)
+  late_minutes                                      Decimal?                                  @db.Decimal(10, 2)
+  penalty                                           Decimal?                                  @db.Decimal(10, 2)
+  overtime_minutes                                  Decimal?                                  @db.Decimal(10, 2)
+  overtime_salary                                   Decimal?                                  @db.Decimal(10, 2)
+  bonus_salary_per_day                              Decimal?                                  @db.Decimal(10, 2)
+  net_salary_of_the_day                             Decimal?                                  @db.Decimal(10, 2)
+  base_salary_per_day                               Decimal?                                  @db.Decimal(10, 2)
+  created_at                                        DateTime?                                 @db.Timestamp(6)
+  updated_at                                        DateTime?                                 @db.Timestamp(6)
+  published_at                                      DateTime?                                 @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  User_employee_attendance_logs_created_by_idToUser User?                                     @relation("employee_attendance_logs_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction, map: "employee_attendance_logs_created_by_id_fk")
+  User_employee_attendance_logs_updated_by_idToUser User?                                     @relation("employee_attendance_logs_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction, map: "employee_attendance_logs_updated_by_id_fk")
+  employee_attendance_logs_user_links               employee_attendance_logs_user_links[]
+  employee_salaries_attendance_logs_links           employee_salaries_attendance_logs_links[]
+  // Foreign key to User
+}
+
+model employee_salaries_attendance_logs_links {
+  id                            Int                       @id @default(autoincrement())
+  employee_salary_id            Int?
+  employee_attendance_log_id    Int?
+  employee_attendance_log_order Float?
+  employee_salaries             employee_salaries?        @relation(fields: [employee_salary_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "employee_salaries_attendance_logs_links_fk")
+  employee_attendance_logs      employee_attendance_logs? @relation(fields: [employee_attendance_log_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "employee_salaries_attendance_logs_links_inv_fk")
+}
+
+model employee_attendance_logs_user_links {
+  id                            Int                       @id @default(autoincrement())
+  employee_attendance_log_order Float?
+  employee_attendance_log_id    Int?
+  user_id                       Int?
+  user                          User?                     @relation(fields: [user_id], references: [id])
+  employee_attendance_logs      employee_attendance_logs? @relation(fields: [employee_attendance_log_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "employee_attendance_logs_user_links_fk")
+}
+
+model employee_salaries {
+  id Int @id @default(autoincrement())
+
+  total_hours_worked   Decimal? @db.Decimal(10, 2)
+  payment_status       String?  @db.VarChar(255)
+  allowances           Decimal? @db.Decimal(10, 2)
+  total_late_deduction Decimal? @db.Decimal(10, 2)
+  total_overtime_bonus Decimal? @db.Decimal(10, 2)
+  total_sell_bonus     Decimal? @db.Decimal(10, 2)
+
+  month_year                DateTime? @db.Date
+  net_salary                Decimal?  @db.Decimal(10, 2)
+  salary_paid               Decimal?  @db.Decimal(10, 2)
+  remaining_salary_of_month Decimal?  @db.Decimal(10, 2)
+
+  // Foreign key to User
+  user_id Int?
+  user    User? @relation("UserToSalaryLogs", fields: [user_id], references: [id], onDelete: SetNull)
+
+  created_at                                 DateTime?                                 @db.Timestamp(6)
+  updated_at                                 DateTime?                                 @db.Timestamp(6)
+  published_at                               DateTime?                                 @db.Timestamp(6)
+  created_by_id                              Int?
+  updated_by_id                              Int?
+  User_employee_salaries_created_by_idToUser User?                                     @relation("employee_salaries_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction, map: "employee_salaries_created_by_id_fk")
+  User_employee_salaries_updated_by_idToUser User?                                     @relation("employee_salaries_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction, map: "employee_salaries_updated_by_id_fk")
+  employee_salaries_attendance_logs_links    employee_salaries_attendance_logs_links[]
+  employee_salaries_employee_id_links        employee_salaries_employee_id_links[]
+  salary_paid_logs                           salary_paid_logs[]
+}
+
+model salary_paid_logs {
+  id      Int       @id @default(autoincrement())
+  user_id Int?
+  user    User?     @relation("UserToSalaryLogs", fields: [user_id], references: [id], onDelete: SetNull)
+  date    DateTime? @default(now()) @db.Date
+
+  salary_id Int // FK to monthly salary
+  salary    employee_salaries @relation(fields: [salary_id], references: [id], onDelete: Cascade)
+
+  paid_amount  Decimal  @db.Decimal(10, 2) // Amount paid in this log
+  paid_on      DateTime @default(now()) // When it was paid
+  payment_mode String?  @db.VarChar(100) // Cash, UPI, Bank, etc.
+  note         String?  @db.VarChar(255) // Optional remarks
+
+  paid_by_user_id Int? // Admin/HR who made the payment
+  paid_by_user    User? @relation(fields: [paid_by_user_id], references: [id], onDelete: SetNull)
+
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  updated_at DateTime @updatedAt @db.Timestamp(6)
+}
+
+model files {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar(255)
+  mime          String   @db.VarChar(255)
+  size          Decimal  @db.Decimal(10, 2)
+  url           String   @db.VarChar(255)
+  hash          String?  @db.VarChar(255)
+  key           String   @db.VarChar(255)
+  folder_path   String?  @db.VarChar(255)
+  created_at    DateTime @default(now()) @db.Timestamp(6)
+  updated_at    DateTime @updatedAt @db.Timestamp(6)
+  created_by_id Int?
+  updated_by_id Int?
+
+  created_by          User?                @relation("files_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction)
+  updated_by          User?                @relation("files_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction)
+  files_folder_links  files_folder_links[]
+  schoolMediaEvidence SchoolMediaEvidence? @relation("SchoolMediaEvidenceFile")
+
+  @@map("files")
+}
+
+model SchoolMediaEvidence {
+  id               Int                       @id @default(autoincrement())
+  file             files                     @relation("SchoolMediaEvidenceFile", fields: [fileId], references: [id], onDelete: Restrict)
+  fileId           Int                       @unique
+  school           School                    @relation("SchoolMediaEvidenceSchool", fields: [schoolId], references: [id], onDelete: Restrict)
+  schoolId         Int
+  branch           SchoolBranch              @relation("SchoolMediaEvidenceBranch", fields: [branchId], references: [id], onDelete: Restrict)
+  branchId         Int
+  reason           SchoolMediaEvidenceReason
+  description      String                    @db.VarChar(1000)
+  status           SchoolMediaEvidenceStatus @default(SUBMITTED)
+  submittedBy      User                      @relation("SchoolMediaEvidenceSubmittedBy", fields: [submittedById], references: [id], onDelete: Restrict)
+  submittedById    Int
+  submittedAt      DateTime                  @default(now())
+  reviewedBy       User?                     @relation("SchoolMediaEvidenceReviewedBy", fields: [reviewedById], references: [id], onDelete: SetNull)
+  reviewedById     Int?
+  reviewedAt       DateTime?
+  verificationNote String?                   @db.VarChar(1000)
+  deleteEligibleAt DateTime?
+  createdAt        DateTime                  @default(now())
+  updatedAt        DateTime                  @updatedAt
+
+  @@index([schoolId, branchId, status, submittedAt])
+  @@index([submittedById, status, submittedAt])
+  @@index([status, deleteEligibleAt])
+}
+
+model files_folder_links {
+  id         Int    @id @default(autoincrement())
+  file_id    Int
+  folder_id  Int?
+  file_order Float?
+
+  file   files           @relation(fields: [file_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  folder upload_folders? @relation(fields: [folder_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("files_folder_links")
+}
+
+model upload_folders {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(255)
+  files_folder_links files_folder_links[]
+
+  @@map("upload_folders")
+}
+
+model files_related_morphs {
+  id           Int     @id @default(autoincrement())
+  file_id      Int?
+  related_id   Int?
+  related_type String? @db.VarChar(255)
+  field        String? @db.VarChar(255)
+  order        Float?
+}
+
+model fleet_logistics_vehicles {
+  id                                                Int       @id @default(autoincrement())
+  vehicle_id                                        String?   @unique(map: "fleet_logistics_vehicles_vehicle_id_unique") @db.VarChar(255)
+  vehicle_type                                      String?   @db.VarChar(255)
+  wright_capacity                                   String?   @db.VarChar(255)
+  capacity_volume                                   String?   @db.VarChar(255)
+  license_plate                                     String?   @db.VarChar(255)
+  chasis_no                                         String?   @db.VarChar(255)
+  registration_no                                   String?   @db.VarChar(255)
+  gps_tracker_id                                    String?   @db.VarChar(255)
+  vehicle_status                                    String?   @db.VarChar(255)
+  last_maintenance_date                             DateTime? @db.Timestamp(6)
+  created_at                                        DateTime? @db.Timestamp(6)
+  updated_at                                        DateTime? @db.Timestamp(6)
+  published_at                                      DateTime? @db.Timestamp(6)
+  created_by_id                                     Int?
+  updated_by_id                                     Int?
+  User_fleet_logistics_vehicles_created_by_idToUser User?     @relation("fleet_logistics_vehicles_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction, map: "fleet_logistics_vehicles_created_by_id_fk")
+  User_fleet_logistics_vehicles_updated_by_idToUser User?     @relation("fleet_logistics_vehicles_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction, map: "fleet_logistics_vehicles_updated_by_id_fk")
+}
+
+model hr_reports_collections {
+  id                                              Int       @id @default(autoincrement())
+  hr_report_id                                    String?   @unique(map: "hr_reports_collections_hr_report_id_unique") @db.VarChar(255)
+  total_employees                                 Int?
+  attendance_rate                                 Decimal?  @db.Decimal(10, 2)
+  overtime_hours                                  Decimal?  @db.Decimal(10, 2)
+  salary_disbursement                             Int?
+  created_at                                      DateTime? @db.Timestamp(6)
+  updated_at                                      DateTime? @db.Timestamp(6)
+  published_at                                    DateTime? @db.Timestamp(6)
+  created_by_id                                   Int?
+  updated_by_id                                   Int?
+  User_hr_reports_collections_created_by_idToUser User?     @relation("hr_reports_collections_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction, map: "hr_reports_collections_created_by_id_fk")
+  User_hr_reports_collections_updated_by_idToUser User?     @relation("hr_reports_collections_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction, map: "hr_reports_collections_updated_by_id_fk")
+}
+
+model i18n_locale {
+  id                                   Int       @id @default(autoincrement())
+  name                                 String?   @db.VarChar(255)
+  code                                 String?   @db.VarChar(255)
+  created_at                           DateTime? @db.Timestamp(6)
+  updated_at                           DateTime? @db.Timestamp(6)
+  created_by_id                        Int?
+  updated_by_id                        Int?
+  User_i18n_locale_created_by_idToUser User?     @relation("i18n_locale_created_by_idToUser", fields: [created_by_id], references: [id], onUpdate: NoAction, map: "i18n_locale_created_by_id_fk")
+  User_i18n_locale_updated_by_idToUser User?     @relation("i18n_locale_updated_by_idToUser", fields: [updated_by_id], references: [id], onUpdate: NoAction, map: "i18n_locale_updated_by_id_fk")
+}
+
+// Enums
+enum AvailabilityMode {
+  ONLINE
+  OFFLINE
+  BOTH
+}
+
+enum UploadMethod {
+  DIRECT_UPLOAD
+  WHATSAPP
+  EMAIL
+}
+
+enum PaymentStatus {
+  PAID
+  UNPAID
+  PARTIALLY_PAID
+  REFUNDED
+}
+
+enum RequestStatus {
+  PENDING
+  IN_PROGRESS
+  ON_HOLD
+  REJECTED
+  COMPLETED
+  CANCELLED
+}
+
+enum BookingMethod {
+  ONLINE
+  IN_OFFICE
+  D2D
+}
+
+enum CaseDistribution {
+  PENDING
+  DISTRICT_ASSIGNED
+  STATE_ESCALATED
+  INTER_DISTRICT
+}
+
+enum ComplaintStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  ESCALATED
+}
+
+enum VisibilityScope {
+  PUBLIC
+  INTERNAL
+  PARTNER_ONLY
+}
+
+enum AiSupportMode {
+  NONE
+  BASIC
+  ADVANCED
+  GPT_ASSISTED
+}
+
+model OperatingHours {
+  id              Int      @id @default(autoincrement())
+  serviceCenterId Int
+  dayOfWeek       String   @db.VarChar(10) // e.g., "Monday"
+  openTime        String   @db.VarChar(5) // e.g., "09:00"
+  closeTime       String   @db.VarChar(5) // e.g., "17:00"
+  createdAt       DateTime @default(now())
+  serviceCenter   School   @relation(fields: [serviceCenterId], references: [id])
+}
+
+model TeacherClasseMapping {
+  id        Int      @id @default(autoincrement())
+  TeacherId Int
+  classId   Int
+  createdAt DateTime @default(now())
+}
+
+model RecordFeatureGroup {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(100) // e.g., "10% Discount Services"
+  slug        String   @unique // e.g., "discount-10-services"
+  description String?  @db.VarChar(300)
+  iconUrl     String?  @db.VarChar(255)
+  bannerUrl   String?  @db.VarChar(500)
+  tagColor    String?  @db.VarChar(20) // e.g., "#FF9800"
+  label       String?  @db.VarChar(100) // e.g., "Limited Time"
+  isActive    Boolean  @default(true)
+  maxServices Int? // optional limit per group
+  createdAt   DateTime @default(now())
+
+  services RecordFeatureMapping[] // 👇 link to services
+}
+
+model RecordFeatureMapping {
+  id        Int                @id @default(autoincrement())
+  featureId Int
+  serviceId Int
+  feature   RecordFeatureGroup @relation(fields: [featureId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([featureId, serviceId]) // Prevent duplicate mappings
+}
+
+model ServiceReview {
+  id        Int      @id @default(autoincrement())
+  serviceId Int
+  userId    Int
+  requestId Int // Link to the actual service request
+  rating    Int      @default(5) // 1 to 5 scale
+  comment   String?  @db.VarChar(1000)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, requestId]) // 🚫 Prevent multiple reviews per request
+}
+
+model Guardian {
+  id                Int                @id @default(autoincrement())
+  name              String             @db.VarChar(100)
+  email             String             @unique @db.VarChar(255)
+  phone             BigInt?
+  passwordHash      String             @db.VarChar(255)
+  whatsappNumber    String?            @db.VarChar(20)
+  districtId        Int?
+  dataConsent       Boolean            @default(false)
+  consentDate       DateTime?
+  address           String?            @db.VarChar(255)
+  village           String?            @db.VarChar(100)
+  block             String?            @db.VarChar(100)
+  pincode           String?            @db.VarChar(10)
+  phone1            BigInt?
+  phone2            BigInt?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  district          District?          @relation(fields: [districtId], references: [id])
+  stateId           Int?
+  state             State?             @relation(fields: [stateId], references: [id])
+  countryId         Int?
+  country           Country?           @relation(fields: [countryId], references: [id])
+  notifications     Notification[]
+  feedback          Feedback[]
+  complaints        Complaint[]
+  communicationLogs CommunicationLog[]
+  Testimonial       Testimonial[]
+
+  GuardianPaymentProfile GuardianPaymentProfile[]
+}
+
+model GuardianPaymentProfile {
+  id         Int      @id @default(autoincrement())
+  GuardianId Int
+  Guardian   Guardian @relation(fields: [GuardianId], references: [id])
+
+  paymentType    PaymentType // UPI, CARD, BANK_ACCOUNT, WALLET, etc.
+  accountHolder  String?     @db.VarChar(100) // optional name
+  upiId          String?     @db.VarChar(100) // e.g., name@upi
+  cardNumber     String?     @db.VarChar(20) // masked, if storing for reference
+  walletProvider String?     @db.VarChar(50) // e.g., Paytm, PhonePe
+  bankName       String?     @db.VarChar(100)
+  accountNumber  String?     @db.VarChar(30)
+  ifscCode       String?     @db.VarChar(20)
+
+  isDefault Boolean  @default(false)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentType {
+  UPI
+  CARD
+  BANK_ACCOUNT
+  WALLET
+  CASH
+  OTHER
+}
+
+model Analytics {
+  id                Int       @id @default(autoincrement())
+  serviceId         Int?
+  districtId        Int?
+  stateId           Int?
+  countryId         Int?
+  requestCount      Int? // Number of requests
+  completionRate    Float? // Percentage of completed requests
+  avgResolutionTime Float? // Average resolution time (hours)
+  slaCompliance     Float? // SLA compliance percentage
+  metrics           Json? // Flexible metrics
+  createdAt         DateTime  @default(now())
+  district          District? @relation(fields: [districtId], references: [id])
+  state             State?    @relation(fields: [stateId], references: [id])
+  country           Country?  @relation(fields: [countryId], references: [id])
+}
+
+model Payment {
+  id         Int           @id @default(autoincrement())
+  requestId  Int
+  amount     Float
+  currencyId Int
+  status     PaymentStatus @default(UNPAID)
+  taxId      Int?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+  tax        Tax?          @relation(fields: [taxId], references: [id])
+}
+
+model Tax {
+  id        Int       @id @default(autoincrement())
+  countryId Int
+  name      String    @db.VarChar(100)
+  rate      Float
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  country   Country   @relation(fields: [countryId], references: [id])
+  payments  Payment[]
+}
+
+model Notification {
+  id         Int      @id @default(autoincrement())
+  GuardianId Int
+  requestId  Int?
+  type       String   @db.VarChar(50) // SMS, EMAIL, WHATSAPP
+  message    String   @db.VarChar(500)
+  status     String   @default("PENDING") @db.VarChar(50)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Guardian   Guardian @relation(fields: [GuardianId], references: [id])
+}
+
+model Feedback {
+  id         Int      @id @default(autoincrement())
+  GuardianId Int
+  serviceId  Int
+  requestId  Int?
+  rating     Int // 1-5 stars
+  comment    String?  @db.VarChar(500)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Guardian   Guardian @relation(fields: [GuardianId], references: [id])
+}
+
+model Complaint {
+  id          Int             @id @default(autoincrement())
+  GuardianId  Int
+  requestId   Int?
+  description String          @db.VarChar(500)
+  status      ComplaintStatus @default(OPEN)
+  resolution  String?         @db.VarChar(500)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  Guardian    Guardian        @relation(fields: [GuardianId], references: [id])
+}
+
+model CommunicationLog {
+  id         Int      @id @default(autoincrement())
+  GuardianId Int
+  requestId  Int?
+  userId     Int? // Staff or executive
+  type       String   @db.VarChar(50) // SMS, EMAIL, WHATSAPP, CALL, IN_PERSON
+  message    String   @db.VarChar(500)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  Guardian   Guardian @relation(fields: [GuardianId], references: [id])
+  user       User?    @relation(fields: [userId], references: [id])
+}
+
+model TeamMember {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  districtId Int
+  teamLeadId Int? // Team lead (manager)
+  role       Role
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+  district   District @relation(fields: [districtId], references: [id])
+  teamLead   User?    @relation("TeamLead", fields: [teamLeadId], references: [id])
+}
+
+model EducationalArticle {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  content   String   @db.Text
+  tags      String[] @db.VarChar(50) // e.g., "property", "divorce", "criminal"
+  image     String?  @db.VarChar(255)
+  views     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model DocumentTemplate {
+  id          Int     @id @default(autoincrement())
+  title       String  @db.VarChar(100)
+  description String? @db.VarChar(300)
+  fileUrl     String  @db.VarChar(255)
+  isFree      Boolean @default(true)
+  category    String? @db.VarChar(100) // Affidavit, Rental, Partnership etc.
+}
+
+model Testimonial {
+  id         Int      @id @default(autoincrement())
+  GuardianId Int?
+  message    String?  @db.VarChar(250)
+  rating     Int? // 1 to 5
+  serviceId  Int?
+  img_url    String?  @db.VarChar(250)
+  createdAt  DateTime @default(now())
+
+  Guardian Guardian? @relation(fields: [GuardianId], references: [id])
+}
+
+model KnowledgeTopic {
+  id              Int     @id @default(autoincrement())
+  title           String  @db.VarChar(150)
+  wikigalaxy_link String? @db.VarChar(250) // For UI cards (optional)
+  youtube_link    String? @db.VarChar(250)
+  slug            String  @unique @db.VarChar(100) // SEO-friendly URL like /knowledge/divorce-basics
+  type            String? @db.VarChar(20) // Help Knowledege Tutorial to Book Consultant
+}
+
+model SiteHomePageNavbar {
+  id        Int     @id @default(autoincrement())
+  title     String  @db.VarChar(50)
+  slug      String  @unique @db.VarChar(60)
+  page_link String? @db.VarChar(300)
+}
+
+model SiteFeaturePlatforms {
+  id          Int     @id @default(autoincrement())
+  title       String  @db.VarChar(50)
+  description String? @db.VarChar(200)
+  page_link   String? @db.VarChar(300)
+  img_url     String? @db.VarChar(300)
+}
+
+model public_site_homepage_carousel {
+  id       Int     @id @default(autoincrement())
+  img_url  String? @db.VarChar(500) // FOr app img
+  title    String? @db.VarChar(80) // FOr app img
+  subtitle String? @db.VarChar(120) // FOr app img
+}
+
+model app_homepage_carousel {
+  id      Int     @id @default(autoincrement())
+  img_url String? @db.VarChar(500) // FOr app img
+}
+
+model site_carousel_two {
+  id        Int     @id @default(autoincrement())
+  img_url   String? @db.VarChar(500) // FOr app img
+  page_link String? @db.VarChar(300)
+  title_1   String? @db.VarChar(50)
+  title_2   String? @db.VarChar(50)
+}
+
+enum EnquiryRole {
+  STUDENT
+  GUARDIAN
+  TEACHER
+  OTHER
+}
+
+enum EnquiryType {
+  ADMISSION
+  FEE
+  HOMEWORK
+  TEST_RESULT
+  SYLLABUS
+  TRANSFER
+  DISCIPLINE
+  COMPLAINT
+  FEEDBACK
+  TECHNICAL_SUPPORT
+  GENERAL_QUERY
+}
+
+enum EnquiryStatus {
+  PENDING
+  RESPONDED
+  CLOSED
+  REJECTED
+}
+
+enum ContactMethod {
+  EMAIL
+  PHONE
+  WHATSAPP
+}
+
+model SchoolEnquiry {
+  id                     Int           @id @default(autoincrement())
+  fullName               String
+  email                  String?
+  phone                  String?
+  role                   EnquiryRole // guardian | student | teacher | other
+  enquiryType            EnquiryType // admission | fee | complaint | etc.
+  subject                String
+  message                String
+  attachmentUrl          String? // Optional file or image
+  schoolId               Int?
+  school                 School?       @relation(fields: [schoolId], references: [id])
+  classOrGrade           String? // Optional class info
+  identification         String? // Student ID, teacher ID, or relation
+  preferredContactMethod ContactMethod @default(EMAIL)
+  status                 EnquiryStatus @default(PENDING)
+  adminNotes             String? // for internal use
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FeatureTechnology {
+  id        Int     @id @default(autoincrement())
+  img_url   String? @db.VarChar(500) // FOr app img
+  page_link String? @db.VarChar(300)
+  title_1   String? @db.VarChar(50)
+  title_2   String? @db.VarChar(150)
+}
+
+model FeatureSchoolCenterCities {
+  id      Int     @id @default(autoincrement())
+  img_url String? @db.VarChar(500) // FOr app img
+  title   String? @db.VarChar(50)
+}
+
+model FeatureStudentsResults {
+  id                        Int     @id @default(autoincrement())
+  img_url                   String? @db.VarChar(500) // FOr app img
+  title                     String? @db.VarChar(50)
+  position                  String? @db.VarChar(50)
+  marks                     String? @db.VarChar(50)
+  pass_year                 String? @db.VarChar(50)
+  college                   String? @db.VarChar(100)
+  designation               String? @db.VarChar(100)
+  qualified_profession_year String? @db.VarChar(100)
+  highest_awards            String? @db.VarChar(100)
+  highest_respect           String? @db.VarChar(100)
+}
+
+enum Program {
+  REPUBLIC_DAY
+  INDEPENDENCE_DAY
+  FAREWELL_DAY
+  TEACHERS_DAY
+  ANNUAL_SPORTS_DAY
+  ANNUAL_FUNCTION
+  SCIENCE_EXHIBITION
+  ART_CULTURAL_FEST
+  CHILDRENS_DAY
+  FOUNDATION_DAY
+  FRESHERS_WELCOME
+  CAREER_COUNSELLING_SEMINAR
+  BLOOD_DONATION_CAMP
+  SOCIAL_AWARENESS_DRIVE
+  QUIZ_COMPETITION
+  DEBATE_COMPETITION
+  SPELL_BEE
+  INTERHOUSE_COMPETITION
+  YOGA_DAY
+  STUDENTS_COUNCIL_ELECTION
+  INTERNATIONAL_ENGLISH_DAY
+  MATHS_WEEK
+  COMPUTER_LITERACY_WEEK
+  EDUCATIONAL_TOUR
+  PARENT_TEACHER_MEETING
+}
+
+model FeatureSchoolsPrograms {
+  id          Int      @id @default(autoincrement())
+  img_url     String?  @db.VarChar(500) // FOr app img
+  title       String?  @db.VarChar(50)
+  description String?  @db.VarChar(200)
+  type        Program?
+}
+
+model AccessRole {
+  id          Int                    @id @default(autoincrement())
+  code        String                 @unique @db.VarChar(100)
+  name        String                 @db.VarChar(150)
+  description String?                @db.Text
+  isSystem    Boolean                @default(false)
+  isActive    Boolean                @default(true)
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+  permissions AccessRolePermission[]
+  assignments UserAccessRole[]
+
+  @@index([isActive])
+}
+
+model AccessPermission {
+  id            Int                    @id @default(autoincrement())
+  code          String                 @unique @db.VarChar(150)
+  name          String                 @db.VarChar(150)
+  category      String                 @db.VarChar(100)
+  description   String?                @db.Text
+  isSystem      Boolean                @default(true)
+  riskLevel     PermissionRiskLevel    @default(STANDARD)
+  policyVersion Int                    @default(1)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  roles         AccessRolePermission[]
+
+  @@index([category])
+}
+
+model AccessRolePermission {
+  id           Int              @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  createdAt    DateTime         @default(now())
+  role         AccessRole       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   AccessPermission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([permissionId])
+}
+
+model UserAccessRole {
+  id           Int             @id @default(autoincrement())
+  userId       Int
+  roleId       Int
+  scopeType    AccessScopeType @default(GLOBAL)
+  schoolId     Int?
+  branchId     Int?
+  classId      Int?
+  startsAt     DateTime?
+  endsAt       DateTime?
+  isActive     Boolean         @default(true)
+  assignedById Int?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  user         User            @relation("UserAccessRoleUser", fields: [userId], references: [id], onDelete: Cascade)
+  role         AccessRole      @relation(fields: [roleId], references: [id], onDelete: Restrict)
+
+  @@index([userId, isActive])
+  @@index([roleId])
+  @@index([scopeType, schoolId, branchId, classId])
+}
+
+model AccessAuditLog {
+  id           Int              @id @default(autoincrement())
+  actorUserId  Int?
+  targetUserId Int?
+  action       String           @db.VarChar(150)
+  resource     String           @db.VarChar(100)
+  resourceId   String?          @db.VarChar(100)
+  scopeType    AccessScopeType?
+  schoolId     Int?
+  branchId     Int?
+  classId      Int?
+  metadata     Json?
+  createdAt    DateTime         @default(now())
+
+  @@index([actorUserId, createdAt])
+  @@index([targetUserId, createdAt])
+  @@index([resource, resourceId])
+}
+
+// Additive organization registry. OrganizationProfile maps one existing School
+// record to the enterprise vocabulary without renaming or moving legacy data.
+model SchoolGroup {
+  id            Int                   @id @default(autoincrement())
+  publicId      String                @unique @default(uuid()) @db.Uuid
+  code          String                @unique @db.VarChar(100)
+  name          String                @db.VarChar(200)
+  status        EnterpriseScopeStatus @default(ACTIVE)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  organizations OrganizationProfile[]
+
+  @@index([status])
+}
+
+model OrganizationProfile {
+  id             Int                     @id @default(autoincrement())
+  publicId       String                  @unique @default(uuid()) @db.Uuid
+  groupId        Int?
+  legacySchoolId Int                     @unique
+  code           String                  @unique @db.VarChar(100)
+  displayName    String                  @db.VarChar(200)
+  legalName      String?                 @db.VarChar(200)
+  status         EnterpriseScopeStatus   @default(ACTIVE)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  group          SchoolGroup?            @relation(fields: [groupId], references: [id], onDelete: Restrict)
+  legacySchool   School                  @relation("OrganizationProfileSchool", fields: [legacySchoolId], references: [id], onDelete: Restrict)
+  regions        OrganizationRegion[]
+  branchScopes   EnterpriseBranchScope[]
+
+  @@index([groupId, status])
+}
+
+model OrganizationRegion {
+  id             Int                     @id @default(autoincrement())
+  publicId       String                  @unique @default(uuid()) @db.Uuid
+  organizationId Int
+  code           String                  @db.VarChar(100)
+  name           String                  @db.VarChar(200)
+  status         EnterpriseScopeStatus   @default(ACTIVE)
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+  organization   OrganizationProfile     @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  branchScopes   EnterpriseBranchScope[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, status])
+}
+
+// The branch scope is optional during rollout. When present it provides a
+// canonical enterprise scope around the unchanged SchoolBranch row.
+model EnterpriseBranchScope {
+  id             Int                   @id @default(autoincrement())
+  publicId       String                @unique @default(uuid()) @db.Uuid
+  organizationId Int
+  regionId       Int?
+  branchId       Int                   @unique
+  code           String                @db.VarChar(100)
+  status         EnterpriseScopeStatus @default(ACTIVE)
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  organization   OrganizationProfile   @relation(fields: [organizationId], references: [id], onDelete: Restrict)
+  region         OrganizationRegion?   @relation(fields: [regionId], references: [id], onDelete: Restrict)
+  branch         SchoolBranch          @relation("EnterpriseBranchScopeBranch", fields: [branchId], references: [id], onDelete: Restrict)
+
+  @@unique([organizationId, code])
+  @@index([regionId, status])
+}
+
+// Policy versions are data, not hard-coded role names. Phase 2 provides the
+// registry only; approval workflows will consume it in a later phase.
+model AccessPolicyVersion {
+  id            Int                @id @default(autoincrement())
+  policyKey     String             @db.VarChar(100)
+  version       Int
+  status        AccessPolicyStatus @default(DRAFT)
+  description   String?            @db.Text
+  rules         Json?
+  effectiveFrom DateTime?
+  effectiveTo   DateTime?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@unique([policyKey, version])
+  @@index([policyKey, status])
+}
+
+// New high-assurance operations can use this append-only event store while
+// legacy access events remain available in AccessAuditLog.
+model EnterpriseAuditEvent {
+  id            BigInt                 @id @default(autoincrement())
+  publicId      String                 @unique @default(uuid()) @db.Uuid
+  actorUserId   Int?
+  action        String                 @db.VarChar(150)
+  resource      String                 @db.VarChar(100)
+  resourceId    String?                @db.VarChar(100)
+  outcome       EnterpriseAuditOutcome @default(SUCCESS)
+  correlationId String?                @db.VarChar(100)
+  scopeType     AccessScopeType?
+  schoolId      Int?
+  branchId      Int?
+  classId       Int?
+  beforeData    Json?
+  afterData     Json?
+  metadata      Json?
+  createdAt     DateTime               @default(now())
+
+  @@index([actorUserId, createdAt])
+  @@index([resource, resourceId])
+  @@index([correlationId])
+  @@index([scopeType, schoolId, branchId, classId])
+}

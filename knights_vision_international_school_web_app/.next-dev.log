@@ -1,0 +1,3155 @@
+
+> sure-success-point-schools-system@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.9
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.31.122:3000
+   - Environments: .env.development.local, .env.local, .env
+
+ ✓ Starting...
+ ✓ Ready in 15.9s
+ ○ Compiling /api/faculty-evidence/options ...
+ ✓ Compiled /api/faculty-evidence/options in 1558ms (382 modules)
+ GET /api/faculty-evidence/options 401 in 2406ms
+ GET /api/faculty-evidence/options 200 in 1959ms
+ ○ Compiling /api/faculty-evidence ...
+ ✓ Compiled /api/faculty-evidence in 747ms (390 modules)
+ POST /api/faculty-evidence 201 in 11245ms
+ ✓ Compiled /api/faculty-evidence/[id]/file in 172ms (392 modules)
+ GET /api/faculty-evidence/1/file 200 in 5728ms
+ ✓ Compiled /api/administration/school-media-evidence in 208ms (394 modules)
+ GET /api/administration/school-media-evidence?status=SUBMITTED&page=1&pageSize=30 200 in 2254ms
+ ✓ Compiled /api/administration/school-media-evidence/[id] in 251ms (396 modules)
+ PATCH /api/administration/school-media-evidence/1 201 in 4107ms
+ DELETE /api/administration/school-media-evidence/1 409 in 1046ms
+ GET /api/faculty-evidence/options 403 in 753ms
+ GET /api/administration/school-media-evidence?page=1&pageSize=1 200 in 910ms
+ ○ Compiling /knights-faculties-panel/sure-success-point-school-management-panel ...
+ ✓ Compiled /knights-faculties-panel/sure-success-point-school-management-panel in 12.5s (4934 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 14134ms
+ ○ Compiling /administration/adminPanelKvis ...
+ ✓ Compiled /administration/adminPanelKvis in 11s (5564 modules)
+ GET /administration/adminPanelKvis 200 in 11967ms
+ ○ Compiling /api/get-info ...
+ ✓ Compiled /api/get-info in 3.2s (2722 modules)
+ GET /api/get-info?type=schools 200 in 5113ms
+ GET /api/school-classes/select 200 in 5183ms
+ GET /api/school-classes/select 200 in 1780ms
+ GET /api/get-info?type=schools 200 in 1779ms
+ GET /api/get-info?type=branches&schoolId=1 200 in 1060ms
+ ○ Compiling /api/students/direct/[className] ...
+ ✓ Compiled /api/students/direct/[className] in 1152ms (2726 modules)
+Error: Route "/api/students/direct/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\students\direct\[className]\route.js:9:13)
+   7 | export async function GET(request, { params }) {
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     const { searchParams } = new URL(request.url);
+  11 |     const searchQuery = searchParams.get('searchQuery') || '';
+  12 |     const page = parseInt(searchParams.get('page') || '1', 10);
+[
+  {
+    id: 59,
+    firstName: 'Sayena',
+    middleName: null,
+    lastName: 'kadri',
+    admissionNumber: 'FB-7b759d6dd0c1bf40a3b18d8e',
+    rollNumber: '01',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '700138513500',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 58,
+    firstName: 'Nusrat',
+    middleName: null,
+    lastName: 'Jahan',
+    admissionNumber: 'FB-a1d90c3d06254aa7b14c02a5',
+    rollNumber: '02',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '6297473614',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 63,
+    firstName: 'Ajaj',
+    middleName: null,
+    lastName: 'Momin',
+    admissionNumber: 'FB-1fcd3b8e386b2c7886b5f1c7',
+    rollNumber: '03',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '9564345529',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 52,
+    firstName: 'Arina',
+    middleName: null,
+    lastName: 'Nasrin',
+    admissionNumber: 'FB-89e2c4d61ee8d758b8df44c7',
+    rollNumber: '04',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '736401735200',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 60,
+    firstName: 'Ali',
+    middleName: null,
+    lastName: 'Abbas',
+    admissionNumber: 'FB-c583c7f6d4ceb107b0fe727a',
+    rollNumber: '05',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '8145722950',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 57,
+    firstName: 'Mahinur',
+    middleName: null,
+    lastName: 'Khatun',
+    admissionNumber: 'FB-19ae16572b070d1ae476fc6e',
+    rollNumber: '06',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '891811214100',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 74,
+    firstName: 'Masrud',
+    middleName: null,
+    lastName: 'Sk',
+    admissionNumber: 'FB-fec316ec6b31eab6064f4695',
+    rollNumber: '07',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '9653458214',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 64,
+    firstName: 'Umme',
+    middleName: 'Khatija',
+    lastName: 'Khatun',
+    admissionNumber: 'FB-e759d0a3be8158207a024b51',
+    rollNumber: '08',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '8695596024',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 68,
+    firstName: 'Md',
+    middleName: null,
+    lastName: 'Yaqub',
+    admissionNumber: 'FB-d834cfc27ae93a9c23915650',
+    rollNumber: '09',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '8001458504',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 71,
+    firstName: 'Sehebaj',
+    middleName: null,
+    lastName: 'Hossain',
+    admissionNumber: 'FB-a2dcff39efb6fea039fcfc3c',
+    rollNumber: '10',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '973336913200',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 75,
+    firstName: 'Nasiba',
+    middleName: null,
+    lastName: 'Khatun',
+    admissionNumber: 'FB-a496bfa171a447a65431896c',
+    rollNumber: '11',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '740718056600',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 67,
+    firstName: 'Siraj',
+    middleName: 'Ud',
+    lastName: 'Doulla',
+    admissionNumber: 'FB-d2c365fc79caee71f6909393',
+    rollNumber: '12',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '988305663300',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 66,
+    firstName: 'Tanbir',
+    middleName: null,
+    lastName: 'Ahammed',
+    admissionNumber: 'FB-cf88a9d9805dd16f9d8fd3d2',
+    rollNumber: '13',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '953151707400',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 72,
+    firstName: 'Sumaiya',
+    middleName: null,
+    lastName: 'Khatun',
+    admissionNumber: 'FB-df0ae151f5fa088b0cd87458',
+    rollNumber: '14',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '7501019258',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 56,
+    firstName: 'Umme',
+    middleName: null,
+    lastName: 'Kulsum',
+    admissionNumber: 'FB-ba0472ee86f1660b6153e255',
+    rollNumber: '15',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '9384629761',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 54,
+    firstName: 'Ali',
+    middleName: null,
+    lastName: 'Sehezad',
+    admissionNumber: 'FB-0ab67b281b0d4a8a6dd5ca19',
+    rollNumber: '16',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '959377131100',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 61,
+    firstName: 'Tabassum',
+    middleName: null,
+    lastName: 'Sultana',
+    admissionNumber: 'FB-2e3ad2ee9ca63154659172b8',
+    rollNumber: '17',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '707669253800',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 69,
+    firstName: 'Nur',
+    middleName: 'Apsana',
+    lastName: 'Khatun',
+    admissionNumber: 'FB-7f7cda51d492549a03e7711b',
+    rollNumber: '18',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '970230142400',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 62,
+    firstName: 'Rahamat',
+    middleName: null,
+    lastName: 'Fasihi',
+    admissionNumber: 'FB-3cb32f3c50012fcf117dd197',
+    rollNumber: '19',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '9749651886',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 65,
+    firstName: 'Mohini',
+    middleName: null,
+    lastName: 'Mandal',
+    admissionNumber: 'FB-eddb73dbc158b8aa448a9aa3',
+    rollNumber: '20',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '9373532419',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 70,
+    firstName: 'Diljan',
+    middleName: null,
+    lastName: 'Sk',
+    admissionNumber: 'FB-3d6235f6851c96f548cf7125',
+    rollNumber: '21',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '000000000000',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 73,
+    firstName: 'Nur',
+    middleName: null,
+    lastName: 'Fayaj',
+    admissionNumber: 'FB-87dd2388da78dbb0ef62bf6d',
+    rollNumber: '22',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '000000000000',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 53,
+    firstName: 'Rijwan',
+    middleName: null,
+    lastName: 'Sk',
+    admissionNumber: 'FB-9d542e5982fc762d313f6c91',
+    rollNumber: '23',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '000000000000',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  },
+  {
+    id: 55,
+    firstName: 'Abdul',
+    middleName: 'Kadir',
+    lastName: 'Jilani',
+    admissionNumber: 'FB-49a75dd7bb8a1156ab5be489',
+    rollNumber: '24',
+    studentCategory: null,
+    gender: null,
+    dateOfBirth: null,
+    admissionDate: null,
+    status: 'ACTIVE',
+    aadhaarNumber: '000000000000',
+    isScholarshipHolder: false,
+    isTransportRequired: false,
+    class: { id: 3, name: 'V', section: 'A', branchName: 'Main Campus' },
+    feeSchemeCategory: undefined
+  }
+]
+ GET /api/students/direct/V?page=1&pageSize=100&searchQuery=&schoolId=1 200 in 3914ms
+ ○ Compiling /knights-students-panel ...
+ ✓ Compiled /knights-students-panel in 12.7s (3559 modules)
+ GET /knights-students-panel 200 in 13609ms
+ ○ Compiling /api/students_auth/validate ...
+ ✓ Compiled /api/students_auth/validate in 1278ms (3625 modules)
+ GET /api/students_auth/validate 200 in 2685ms
+ ○ Compiling /knights-students-panel/kvis-parent-students-panel ...
+ ✓ Compiled /knights-students-panel/kvis-parent-students-panel in 6.6s (4266 modules)
+ GET /knights-students-panel/kvis-parent-students-panel 200 in 7307ms
+ GET /api/students_auth/validate 200 in 453ms
+ GET /api/students_auth/validate 200 in 902ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1479ms (4273 modules)
+ GET /knights-logo/ssps-90x90.png 404 in 1920ms
+ GET /ssps-logo/ssps-60x60.png 404 in 1924ms
+ ⨯ The requested resource isn't a valid image for /ssps-logo/ssps-60x60.png received null
+ ⨯ The requested resource isn't a valid image for /knights-logo/ssps-90x90.png received null
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ ○ Compiling /knights-faculties-panel/sure-success-point-school-management-panel ...
+ ✓ Compiled /knights-faculties-panel/sure-success-point-school-management-panel in 3.5s (2707 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 5228ms
+ ○ Compiling /api-schools-panel/rbac/authorization ...
+ ✓ Compiled /api-schools-panel/rbac/authorization in 2.8s (5401 modules)
+ GET /api-schools-panel/rbac/authorization 200 in 4005ms
+ GET /api-schools-panel/auth/validate 200 in 4596ms
+ ○ Compiling /api-schools-panel/attendance/[className] ...
+ ✓ Compiled /api-schools-panel/attendance/[className] in 1359ms (5396 modules)
+Error: Route "/api-schools-panel/attendance/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getAttendanceRegister(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+ GET /api-schools-panel/attendance/LKG?page=1&pageSize=50 200 in 3560ms
+Error: Route "/api-schools-panel/attendance/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getAttendanceRegister(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+ GET /api-schools-panel/attendance/LKG?page=1&pageSize=50 200 in 1017ms
+ ○ Compiling /api/get-info ...
+ ✓ Compiled /api/get-info in 589ms (2713 modules)
+ GET /api/get-info?type=schools 200 in 1090ms
+ GET /api/get-info?type=schools 200 in 1040ms
+ GET /api/get-info?type=branches&schoolId=1 200 in 1074ms
+ GET /api/get-info?type=students&branchId=1&academicYear=2025&page=1&pageSize=10 200 in 1361ms
+ GET /api/get-info?type=students&branchId=1&academicYear=2025&page=1&pageSize=10 200 in 1084ms
+ ○ Compiling /api/student-lifecycle/catalog ...
+ ✓ Compiled /api/student-lifecycle/catalog in 1822ms (5394 modules)
+ GET /api/student-lifecycle/catalog 200 in 4823ms
+ GET /api/student-lifecycle/catalog 200 in 980ms
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 3.3s (5393 modules)
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 4907ms
+ GET /api/student-lifecycle/catalog 200 in 5792ms
+ GET /api/student-lifecycle/tc-requests 200 in 5863ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 1704ms
+ GET /api/student-lifecycle/catalog 200 in 1413ms
+ GET /api/student-lifecycle/tc-requests 200 in 1361ms
+ ○ Compiling /api/student-lifecycle/students/[id] ...
+ ✓ Compiled /api/student-lifecycle/students/[id] in 1472ms (5395 modules)
+ GET /api/student-lifecycle/students/249 200 in 4512ms
+ ✓ Compiled in 1285ms (2598 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 672ms
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 17.1s (5394 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1139ms
+ GET /api/student-lifecycle/tc-requests 200 in 7624ms
+ GET /api/student-lifecycle/catalog 200 in 7756ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 7977ms
+ GET /api/student-lifecycle/catalog 200 in 1235ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 1369ms
+ GET /api/student-lifecycle/tc-requests 200 in 1847ms
+ GET /api/student-lifecycle/catalog 200 in 1018ms
+ GET /api/student-lifecycle/tc-requests 200 in 1130ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 1409ms
+ ✓ Compiled in 2.8s (5394 modules)
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 1849ms
+ GET /api/student-lifecycle/catalog 200 in 2165ms
+ GET /api/student-lifecycle/tc-requests 200 in 2174ms
+ ✓ Compiled in 2.5s (5394 modules)
+ GET /api/student-lifecycle/catalog 200 in 1528ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 1579ms
+ GET /api/student-lifecycle/tc-requests 200 in 1656ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 4.7s (5401 modules)
+ GET /api/student-lifecycle/students/1/photo 401 in 6305ms
+ ○ Compiling /knights-faculties-panel ...
+ ✓ Compiled /knights-faculties-panel in 2.3s (5402 modules)
+MUI Grid: The `item` prop has been removed and is no longer necessary. You can safely remove it.
+
+MUI Grid: The `xs` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+
+MUI Grid: The `md` prop has been removed. See https://mui.com/material-ui/migration/upgrade-to-grid-v2/ for migration instructions.
+
+ GET /knights-faculties-panel 200 in 2863ms
+ ○ Compiling /api/student-lifecycle/students/[id] ...
+ ✓ Compiled /api/student-lifecycle/students/[id] in 2.4s (2705 modules)
+ GET /api/student-lifecycle/students/1 401 in 2958ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 806ms (2712 modules)
+ GET /api/student-lifecycle/students/1/photo 401 in 2269ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 2624ms
+ GET /api/student-lifecycle/students/1 401 in 598ms
+ GET /api/student-lifecycle/students/1 200 in 2521ms
+ GET /api/student-lifecycle/students/1/photo 403 in 327ms
+ ✓ Compiled in 2.7s (2712 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 415ms
+ GET /api/student-lifecycle/students/1 200 in 1246ms
+ GET /api/student-lifecycle/students/1/photo 404 in 973ms
+[Student lifecycle] Error: An image file is required.
+    at storeSchoolMedia (src\lib\media\backblazeMedia.js:58:11)
+    at POST (src\app\api\student-lifecycle\students\[id]\photo\route.js:108:38)
+  56 | export async function storeSchoolMedia({ file, visibility, folder = "library" }) {
+  57 |   if (!file || typeof file.arrayBuffer !== "function") {
+> 58 |     throw new Error("An image file is required.");
+     |           ^
+  59 |   }
+  60 |   if (!acceptedMimeTypes.has(file.type)) {
+  61 |     throw new Error("Use a JPEG, PNG, WebP, or GIF image.");
+ POST /api/student-lifecycle/students/1/photo 500 in 1206ms
+ ✓ Compiled in 655ms (2712 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 325ms
+ POST /api/student-lifecycle/students/1/photo 400 in 1123ms
+ GET /api/student-lifecycle/students/251/photo 404 in 770ms
+ PATCH /api/student-lifecycle/students/1 400 in 1178ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1239ms
+ ✓ Compiled in 4.8s (5288 modules)
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 1241ms (2704 modules)
+ ✓ Compiled (2709 modules)
+ GET /api/student-lifecycle/tc-requests 200 in 3341ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 4240ms
+ GET /api/student-lifecycle/catalog 200 in 4264ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1154ms
+ ○ Compiling /api/student-lifecycle/students/[id] ...
+ ✓ Compiled /api/student-lifecycle/students/[id] in 675ms (2711 modules)
+ GET /api/student-lifecycle/students/271 200 in 3089ms
+ GET /api/student-lifecycle/students/249 200 in 6401ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 8.3s (2712 modules)
+ POST /api/student-lifecycle/students/249/photo 201 in 17031ms
+ PATCH /api/student-lifecycle/students/249 200 in 2328ms
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 1200ms (2714 modules)
+ ✓ Compiled in 1ms (2718 modules)
+ ✓ Compiled in 0ms (2718 modules)
+ ✓ Compiled in 0ms (2718 modules)
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 6896ms
+ GET /api/student-lifecycle/tc-requests 200 in 10002ms
+ GET /api/student-lifecycle/catalog 200 in 10056ms
+ GET /api/student-lifecycle/students/249/photo 200 in 13155ms
+ GET /api/student-lifecycle/catalog 200 in 2829ms
+ GET /api/student-lifecycle/tc-requests 200 in 3055ms
+ GET /api/student-lifecycle/students?className=UKG&pageSize=200 200 in 3064ms
+ GET /api/student-lifecycle/tc-requests 200 in 1687ms
+ GET /api/student-lifecycle/students?className=LKG&pageSize=200 200 in 3345ms
+ GET /api/student-lifecycle/catalog 200 in 2591ms
+ GET /api/student-lifecycle/students/291 200 in 2495ms
+ ✓ Compiled in 12.5s (5290 modules)
+ ✓ Compiled in 1308ms (5290 modules)
+ ✓ Compiled in 1526ms (5290 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 2525ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 1988ms (2711 modules)
+ GET /api/student-lifecycle/students/1/photo 401 in 2575ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 898ms
+ ○ Compiling /api/student-lifecycle/students/[id] ...
+ ✓ Compiled /api/student-lifecycle/students/[id] in 2.3s (2706 modules)
+ GET /api/student-lifecycle/students/249 200 in 6382ms
+ GET /api/student-lifecycle/students/258 200 in 1468ms
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 2.3s (2705 modules)
+ ✓ Compiled (2710 modules)
+ GET /api/student-lifecycle/tc-requests 200 in 5101ms
+ GET /api/student-lifecycle/students?className=XIIIJ&pageSize=200 200 in 6074ms
+ GET /api/student-lifecycle/catalog 200 in 6142ms
+ ○ Compiling /api-schools-panel/students/direct/[className] ...
+ ✓ Compiled /api-schools-panel/students/direct/[className] in 2.8s (5400 modules)
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 5115ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 1131ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 1070ms
+ ○ Compiling /api-schools-panel/SemesterResults/[className]/students ...
+ ✓ Compiled /api-schools-panel/SemesterResults/[className]/class-subjects in 13.8s (5402 modules)
+Error: Route "/api-schools-panel/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api-schools-panel/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\students\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const searchQuery = searchParams.get('searchQuery') || '';
+  14 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api-schools-panel/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 16518ms
+ GET /api-schools-panel/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 16520ms
+Error: Route "/api-schools-panel/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api-schools-panel/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\students\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const searchQuery = searchParams.get('searchQuery') || '';
+  14 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api-schools-panel/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 1954ms
+ GET /api-schools-panel/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 1951ms
+ ○ Compiling /api-schools-panel/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api-schools-panel/SemesterResults/[className]/semester-results in 1522ms (5319 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_II
+ GET /api-schools-panel/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_II 200 in 4521ms
+ ✓ Compiled in 2.6s (5319 modules)
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_III
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_I
+ GET /api-schools-panel/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_III 200 in 5850ms
+ GET /api-schools-panel/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_I 200 in 5851ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.5s (5326 modules)
+ GET /knights-logo/ssps-150x150.png 404 in 2910ms
+ GET /knights-logo/ssps-150x150.png 404 in 44ms
+ GET /ssps-logo/ssps-150x150.png 404 in 43ms
+ ✓ Compiled in 1789ms (5326 modules)
+ ✓ Compiled in 5.4s (5301 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1471ms
+ ○ Compiling /api/Punishments/[className]/punishments ...
+ ✓ Compiled /api-schools-panel/SemesterResults/[className]/class-subjects in 24.9s (5320 modules)
+Error: Route "/api-schools-panel/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\students\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const searchQuery = searchParams.get('searchQuery') || '';
+  14 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api-schools-panel/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/Punishments/[className]/punishments" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\Punishments\[className]\punishments\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/Punishments/[className]/punishments" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\Punishments\[className]\punishments\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api-schools-panel/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 19974ms
+ GET /api-schools-panel/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 19973ms
+ GET /api/Punishments/ix/punishments?page=1&pageSize=10&searchQuery=&academicYear=2026&branchId=1 200 in 21224ms
+ GET /api/Punishments/ix/punishments?page=1&pageSize=10&searchQuery=&academicYear=2026&branchId=1 200 in 1808ms
+Error: Route "/api-schools-panel/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\students\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const searchQuery = searchParams.get('searchQuery') || '';
+  14 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api-schools-panel/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api-schools-panel/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 1875ms
+ GET /api-schools-panel/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 1875ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 1436ms (5322 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_II 200 in 4062ms
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_III
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_I
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_III 200 in 5237ms
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_I 200 in 5238ms
+ ✓ Compiled in 7.8s (5295 modules)
+ ✓ Compiled in 2.4s (5295 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 2054ms
+ ○ Compiling /api/SemesterResults/[className]/class-subjects ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 6.5s (5318 modules)
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 7456ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 9505ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 7457ms
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 2092ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 2093ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 2093ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 1750ms (2630 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_III
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_III 200 in 3743ms
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_II
+DEBUG: Fetched 0 results for studentId=217, semester=SEMESTER_I
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_II 200 in 5076ms
+ GET /api/SemesterResults/ix/semester-results?studentId=217&semester=SEMESTER_I 200 in 5077ms
+ ○ Compiling /api-schools-panel/students/direct/[className] ...
+ ✓ Compiled /api-schools-panel/students/direct/[className] in 4s (2715 modules)
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 738ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 7147ms
+ ○ Compiling /api/student-lifecycle/catalog ...
+ ✓ Compiled /api/student-lifecycle/catalog in 1641ms (2717 modules)
+ GET /api/student-lifecycle/catalog?className=IX 200 in 3454ms
+ GET /api/student-lifecycle/catalog?className=IX 200 in 894ms
+ ○ Compiling /api-schools-panel/attendance/[className] ...
+ ✓ Compiled /api-schools-panel/attendance/[className] in 646ms (2720 modules)
+Error: Route "/api-schools-panel/attendance/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getAttendanceRegister(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+ GET /api-schools-panel/attendance/IX?classId=27&page=1&pageSize=30 200 in 1857ms
+ ○ Compiling /api/student-lifecycle/tc-requests ...
+ ✓ Compiled /api/student-lifecycle/tc-requests in 702ms (2722 modules)
+ ✓ Compiled (2724 modules)
+ GET /api/student-lifecycle/tc-requests 200 in 2776ms
+ GET /api/student-lifecycle/students?className=II&pageSize=200 200 in 3401ms
+ GET /api/student-lifecycle/catalog 200 in 4194ms
+ GET /api/student-lifecycle/tc-requests 200 in 1600ms
+ ○ Compiling /api/student-lifecycle/students/[id] ...
+ GET /api/student-lifecycle/students?className=II&pageSize=200 200 in 6749ms
+ ✓ Compiled /api/student-lifecycle/students/[id] in 796ms (2722 modules)
+ GET /api/student-lifecycle/catalog 200 in 4707ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200 200 in 6706ms
+ GET /api/student-lifecycle/tc-requests 200 in 4625ms
+ GET /api/student-lifecycle/catalog 200 in 1250ms
+ GET /api/student-lifecycle/students/321 200 in 4325ms
+ GET /api/student-lifecycle/catalog 200 in 1501ms
+ GET /api/student-lifecycle/tc-requests 200 in 1664ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=s 200 in 1932ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=sa 200 in 2224ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=sal 200 in 1274ms
+ GET /api/student-lifecycle/tc-requests 200 in 1219ms
+ GET /api/student-lifecycle/catalog 200 in 1979ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=sale 200 in 1211ms
+ GET /api/student-lifecycle/tc-requests 200 in 1020ms
+ GET /api/student-lifecycle/catalog 200 in 916ms
+ GET /api/student-lifecycle/tc-requests 200 in 1017ms
+ GET /api/student-lifecycle/catalog 200 in 916ms
+ GET /api/student-lifecycle/students/203 200 in 1167ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 5.7s (2722 modules)
+ POST /api/student-lifecycle/students/203/photo 201 in 17041ms
+ PATCH /api/student-lifecycle/students/203 200 in 1310ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=sale 200 in 1648ms
+ GET /api/student-lifecycle/catalog 200 in 1733ms
+ GET /api/student-lifecycle/tc-requests 200 in 2197ms
+ GET /api/student-lifecycle/students/203/photo 200 in 4235ms
+ ○ Compiling /api-schools-panel/students/direct/[className] ...
+ ✓ Compiled /api-schools-panel/students/direct/[className] in 2.2s (2724 modules)
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 3719ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 1346ms
+ GET /api/student-lifecycle/students/203/photo 200 in 5221ms
+ GET /api/student-lifecycle/tc-requests 200 in 1514ms
+ GET /api/student-lifecycle/catalog 200 in 1718ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200 200 in 1761ms
+ GET /api/student-lifecycle/catalog 200 in 1082ms
+ GET /api/student-lifecycle/tc-requests 200 in 1326ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200 200 in 1195ms
+ GET /api/student-lifecycle/catalog 200 in 1467ms
+ GET /api/student-lifecycle/tc-requests 200 in 1491ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=n 200 in 1657ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nus 200 in 1662ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nu 200 in 1673ms
+ GET /api/student-lifecycle/catalog 200 in 1320ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nusr 200 in 1553ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nusra 200 in 1285ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nusrat 200 in 960ms
+ GET /api/student-lifecycle/tc-requests 200 in 1714ms
+ GET /api/student-lifecycle/catalog 200 in 957ms
+ GET /api/student-lifecycle/tc-requests 200 in 1017ms
+ GET /api/student-lifecycle/catalog 200 in 1042ms
+ GET /api/student-lifecycle/tc-requests 200 in 1001ms
+ GET /api/student-lifecycle/catalog 200 in 1129ms
+ GET /api/student-lifecycle/tc-requests 200 in 1098ms
+ GET /api/student-lifecycle/students/212 200 in 1992ms
+ GET /api/student-lifecycle/catalog 200 in 1117ms
+ GET /api/student-lifecycle/tc-requests 200 in 1149ms
+ POST /api/student-lifecycle/students/212/photo 201 in 13362ms
+ PATCH /api/student-lifecycle/students/212 200 in 1463ms
+ GET /api/student-lifecycle/catalog 200 in 1683ms
+ GET /api/student-lifecycle/tc-requests 200 in 1717ms
+ GET /api/student-lifecycle/students?className=IX&pageSize=200&search=nusrat 200 in 1757ms
+ GET /api/student-lifecycle/students/212/photo 200 in 2775ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 1542ms
+ GET /api-schools-panel/students/direct/ix?page=1&pageSize=60&searchQuery= 200 in 1024ms
+ GET /api/student-lifecycle/students/212/photo 200 in 5299ms
+ GET /api/student-lifecycle/students/203/photo 200 in 6522ms
+ ○ Compiling /api-schools-panel/employee-attendance-logs/get-attendance-all ...
+ ✓ Compiled /api/SemesterResults/[className]/class-subjects in 19.6s (5398 modules)
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 5896ms
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api-schools-panel/employee-attendance-logs/get-attendance-all?page=1&pageSize=100&date=2026-10-23 200 in 15129ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 1415ms
+ GET /api-schools-panel/employee-attendance-logs/get-attendance-all?page=1&pageSize=100&date=2026-10-23 200 in 2292ms
+ ○ Compiling /api/SemesterResults/[className]/students ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 690ms (2710 modules)
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 2723ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 2722ms
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 1971ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 1969ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 658ms (2712 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_II 200 in 2546ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_III
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_I
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_III 200 in 3853ms
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_I 200 in 3923ms
+ ○ Compiling /api/SemesterResults/[className]/students ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 12.7s (5318 modules)
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 5507ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 5578ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 5508ms
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 2094ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 2093ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 2093ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 2.1s (2626 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_I
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_I 200 in 4455ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_III
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_III 200 in 5794ms
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_II 200 in 5786ms
+ ○ Compiling /api/SemesterResults/[className]/students ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 8.4s (5318 modules)
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 4377ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 4393ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 4391ms
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 615ms (2630 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 3144ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 3143ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 3143ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_II 200 in 3071ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_I
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_III
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_I 200 in 4449ms
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_III 200 in 4448ms
+ ✓ Compiled in 7.4s (5295 modules)
+ ✓ Compiled in 2.7s (5295 modules)
+ ✓ Compiled in 1195ms (5295 modules)
+ ○ Compiling /api/SemesterResults/[className]/class-subjects ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 5.1s (2626 modules)
+ ✓ Compiled (2628 modules)
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 6706ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 8157ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 6690ms
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10 200 in 2050ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 2048ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 2049ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 1943ms (2630 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_II 200 in 3796ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_III
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_I
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_III 200 in 5048ms
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_I 200 in 5049ms
+ ✓ Compiled in 6.9s (5316 modules)
+ ✓ Compiled in 4.5s (5295 modules)
+ ✓ Compiled in 1144ms (5295 modules)
+ ✓ Compiled in 1091ms (5295 modules)
+ ✓ Compiled in 6.5s (5295 modules)
+ ○ Compiling /api/SemesterResults/[className]/students ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 3.7s (2626 modules)
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 894ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=1 200 in 5617ms
+ ○ Compiling /api/SemesterResults/[className]/class-subjects ...
+ ✓ Compiled /api/SemesterResults/[className]/students in 3.4s (2626 modules)
+ ✓ Compiled (2628 modules)
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 4057ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10&searchQuery= 200 in 5929ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 4067ms
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+Error: Route "/api/SemesterResults/[className]/students" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\students\route.js:12:13)
+  10 | export async function GET(request, { params }) {
+  11 |   try {
+> 12 |     const { className } = params;
+     |             ^
+  13 |     const { searchParams } = new URL(request.url);
+  14 |     const searchQuery = searchParams.get('searchQuery') || '';
+  15 |     const page = parseInt(searchParams.get('page') || '1', 10);
+Error: Route "/api/SemesterResults/[className]/class-subjects" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api\SemesterResults\[className]\class-subjects\route.js:11:13)
+   9 | export async function GET(request, { params }) {
+  10 |   try {
+> 11 |     const { className } = params;
+     |             ^
+  12 |     const { searchParams } = new URL(request.url);
+  13 |     const page = parseInt(searchParams.get('page') || '1', 10);
+  14 |     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=100 200 in 1895ms
+ GET /api/SemesterResults/ix/class-subjects?page=1&pageSize=10&searchQuery= 200 in 1897ms
+ GET /api/SemesterResults/ix/students?page=1&pageSize=50&searchQuery= 200 in 1895ms
+ ○ Compiling /api/SemesterResults/[className]/semester-results ...
+ ✓ Compiled /api/SemesterResults/[className]/semester-results in 1884ms (2630 modules)
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetching semester results for className=ix
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_II
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_II 200 in 3699ms
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_I
+DEBUG: Fetched 0 results for studentId=212, semester=SEMESTER_III
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_I 200 in 4940ms
+ GET /api/SemesterResults/ix/semester-results?studentId=212&semester=SEMESTER_III 200 in 4939ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 4.4s (2720 modules)
+ GET /api/student-lifecycle/students/212/photo 200 in 9809ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1630ms
+ ○ Compiling /knights-faculties-panel ...
+ ✓ Compiled /knights-faculties-panel in 1824ms (2721 modules)
+ GET /knights-faculties-panel 200 in 2171ms
+ ○ Compiling /_not-found ...
+ GET /knights-faculties-panel 200 in 3492ms
+ GET /knights-faculties-panel 200 in 1147ms
+ ✓ Compiled /_not-found in 7.1s (5416 modules)
+ GET /ssps-logo/ssps-500x500.png 404 in 7505ms
+ ○ Compiling /api-schools-panel/auth/login ...
+ ✓ Compiled /api-schools-panel/auth/login in 1476ms (5420 modules)
+ POST /api-schools-panel/auth/login 200 in 2850ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 506ms
+ ○ Compiling /api-schools-panel/rbac/authorization ...
+ ✓ Compiled /api-schools-panel/rbac/authorization in 1816ms (2717 modules)
+ ✓ Compiled (2720 modules)
+ GET /api-schools-panel/rbac/authorization 200 in 3048ms
+ GET /api-schools-panel/rbac/authorization 200 in 616ms
+ GET /api-schools-panel/auth/validate 200 in 4021ms
+ GET /knights-logo/ssps-90x90.png 404 in 186ms
+ GET /ssps-logo/ssps-60x60.png 404 in 199ms
+ ⨯ The requested resource isn't a valid image for /knights-logo/ssps-90x90.png received null
+ ⨯ The requested resource isn't a valid image for /ssps-logo/ssps-60x60.png received null
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+[Error: The requested resource isn't a valid image.] { statusCode: 400 }
+ GET /api-schools-panel/auth/validate 200 in 663ms
+ ○ Compiling /api/monthly-fees/[className]/students ...
+ ✓ Compiled /api/monthly-fees/[className]/students in 3s (5417 modules)
+ GET /api/monthly-fees/i/students?className=I&page=1&pageSize=10&academicYear=2026 200 in 5112ms
+ GET /api/monthly-fees/i/students?className=I&page=1&pageSize=10&academicYear=2026 200 in 930ms
+ ○ Compiling /api-schools-panel/attendance/[className]/leave-requests ...
+ ✓ Compiled /api/student-lifecycle/catalog in 3.9s (5425 modules)
+Error: Route "/api-schools-panel/attendance/[className]/leave-requests" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\leave-requests\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getClassLeaveRequests(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+ GET /api/student-lifecycle/catalog?className=X 200 in 3724ms
+ GET /api/student-lifecycle/catalog?className=X 200 in 977ms
+ GET /api-schools-panel/attendance/x/leave-requests?page=1&pageSize=100&status=ALL 200 in 6461ms
+ ○ Compiling /api-schools-panel/attendance/[className] ...
+ ✓ Compiled /api-schools-panel/attendance/[className] in 869ms (2733 modules)
+Error: Route "/api-schools-panel/attendance/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getAttendanceRegister(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+Error: Route "/api-schools-panel/attendance/[className]/leave-requests" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\attendance\[className]\leave-requests\route.js:4:48)
+  2 |
+  3 | export async function GET(request, { params }) {
+> 4 |   return getClassLeaveRequests(request, params.className);
+    |                                                ^
+  5 | }
+  6 |
+ GET /api-schools-panel/attendance/x/leave-requests?page=1&pageSize=100&status=ALL 200 in 2596ms
+ GET /api-schools-panel/attendance/X?classId=28&page=1&pageSize=30 200 in 3106ms
+ ○ Compiling /api-schools-panel/students/direct/[className] ...
+ ✓ Compiled /api-schools-panel/students/direct/[className] in 2.2s (2724 modules)
+ GET /api-schools-panel/students/direct/x?page=1&pageSize=60&searchQuery= 200 in 3822ms
+ ○ Compiling /api/get-info ...
+ ✓ Compiled /api/get-info in 2.1s (2723 modules)
+ GET /api/get-info?type=schools 200 in 2786ms
+ GET /api/get-info?type=schools 200 in 4493ms
+ GET /api/get-info?type=branches&schoolId=1 200 in 5424ms
+ ✓ Compiled in 14.3s (5300 modules)
+ ✓ Compiled in 2.7s (5300 modules)
+ ✓ Compiled in 1875ms (5300 modules)
+ ✓ Compiled in 1736ms (5300 modules)
+ ✓ Compiled in 3.1s (5300 modules)
+ ✓ Compiled in 4.3s (5300 modules)
+ ○ Compiling /api-schools-panel/MonthlyAdmitCards/[className]/admit-cards/[id] ...
+ ✓ Compiled /api-schools-panel/MonthlyAdmitCards/[className]/admit-cards/[id] in 4.1s (5321 modules)
+Error: Route "/api-schools-panel/MonthlyAdmitCards/[className]/admit-cards/[id]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\MonthlyAdmitCards\[className]\admit-cards\[id]\route.js:6:13)
+  4 | export async function GET(request, { params }) {
+  5 |   try {
+> 6 |     const { className, id } = params;
+    |             ^
+  7 |     const studentId = parseInt(id);
+  8 |     if (!studentId) {
+  9 |       return NextResponse.json({ error: 'Invalid student ID' }, { status: 400 });
+Error: Route "/api-schools-panel/MonthlyAdmitCards/[className]/admit-cards/[id]" used `params.id`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\MonthlyAdmitCards\[className]\admit-cards\[id]\route.js:6:24)
+  4 | export async function GET(request, { params }) {
+  5 |   try {
+> 6 |     const { className, id } = params;
+    |                        ^
+  7 |     const studentId = parseInt(id);
+  8 |     if (!studentId) {
+  9 |       return NextResponse.json({ error: 'Invalid student ID' }, { status: 400 });
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/201 200 in 6483ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 1804ms
+ ○ Compiling /api-schools-panel/MonthlyAdmitCards/[className]/admit-cards ...
+ ✓ Compiled /api-schools-panel/MonthlyAdmitCards/[className]/admit-cards in 3.3s (5325 modules)
+Error: Route "/api-schools-panel/MonthlyAdmitCards/[className]/admit-cards" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\MonthlyAdmitCards\[className]\admit-cards\route.js:6:13)
+  4 | export async function GET(request, { params }) {
+  5 |   try {
+> 6 |     const { className } = params;
+    |             ^
+  7 |     const { searchParams } = new URL(request.url);
+  8 |     const searchQuery = searchParams.get('searchQuery') || '';
+  9 |     const page = parseInt(searchParams.get('page') || '1', 10);
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'i' },
+  className: 'i',
+  [Symbol(async_id_symbol)]: 7360525,
+  [Symbol(trigger_async_id_symbol)]: 7360517,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/i',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: i
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'I' } }
+DEBUG: Total schedules count: 1
+ GET /api-schools-panel/MonthlyAdmitCards/i/admit-cards?className=I&page=1&pageSize=10&searchQuery= 200 in 6378ms
+Error: Route "/api-schools-panel/MonthlyAdmitCards/[className]/admit-cards" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\MonthlyAdmitCards\[className]\admit-cards\route.js:6:13)
+  4 | export async function GET(request, { params }) {
+  5 |   try {
+> 6 |     const { className } = params;
+    |             ^
+  7 |     const { searchParams } = new URL(request.url);
+  8 |     const searchQuery = searchParams.get('searchQuery') || '';
+  9 |     const page = parseInt(searchParams.get('page') || '1', 10);
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'ix' },
+  className: 'ix',
+  [Symbol(async_id_symbol)]: 7413374,
+  [Symbol(trigger_async_id_symbol)]: 7413366,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/ix',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: ix
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'IX' } }
+Error: Route "/api-schools-panel/MonthlyAdmitCards/[className]/admit-cards" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\MonthlyAdmitCards\[className]\admit-cards\route.js:6:13)
+  4 | export async function GET(request, { params }) {
+  5 |   try {
+> 6 |     const { className } = params;
+    |             ^
+  7 |     const { searchParams } = new URL(request.url);
+  8 |     const searchQuery = searchParams.get('searchQuery') || '';
+  9 |     const page = parseInt(searchParams.get('page') || '1', 10);
+DEBUG: Fetched schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-05T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-05T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    className: 'I - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+DEBUG: Total schedules count: 1
+ GET /api-schools-panel/semester-exam-schedules/i?page=1&pageSize=100 200 in 8343ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards?className=IX&page=1&pageSize=10&searchQuery= 200 in 2143ms
+ GET /api-schools-panel/MonthlyAdmitCards/i/admit-cards?className=I&page=1&pageSize=10&searchQuery= 200 in 1809ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'i' },
+  className: 'i',
+  [Symbol(async_id_symbol)]: 7445600,
+  [Symbol(trigger_async_id_symbol)]: 7445592,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/i',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: i
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'I' } }
+DEBUG: Fetched schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-13T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-13T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    className: 'IX - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Total schedules count: 1
+DEBUG: Disconnecting Prisma client...
+DEBUG: Fetched schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-05T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-05T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    className: 'I - A',
+    subjectName: 'English'
+  }
+]
+ GET /api-schools-panel/semester-exam-schedules/ix?page=1&pageSize=100 200 in 4013ms
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/i?page=1&pageSize=100 200 in 2589ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'i' },
+  className: 'i',
+  [Symbol(async_id_symbol)]: 7467013,
+  [Symbol(trigger_async_id_symbol)]: 7467005,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/i',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: i
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'I' } }
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-05T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-05T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    className: 'I - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/i?page=1&pageSize=100 200 in 1884ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'ix' },
+  className: 'ix',
+  [Symbol(async_id_symbol)]: 7488553,
+  [Symbol(trigger_async_id_symbol)]: 7488545,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/ix',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: ix
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'IX' } }
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'i' },
+  className: 'i',
+  [Symbol(async_id_symbol)]: 7509248,
+  [Symbol(trigger_async_id_symbol)]: 7509240,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/i',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: i
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'I' } }
+DEBUG: Total schedules count: 1
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-13T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-13T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    className: 'IX - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+DEBUG: Fetched schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-05T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 3,
+    classSubjectId: 119,
+    classId: 19,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-05T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-03',
+    className: 'I - A',
+    subjectName: 'English'
+  }
+]
+ GET /api-schools-panel/semester-exam-schedules/ix?page=1&pageSize=100 200 in 2212ms
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/i?page=1&pageSize=100 200 in 2610ms
+ ✓ Compiled in 744ms (2635 modules)
+ ✓ Compiled in 1ms (2635 modules)
+ ✓ Compiled in 1ms (2635 modules)
+ ✓ Compiled in 1ms (2635 modules)
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'ix' },
+  className: 'ix',
+  [Symbol(async_id_symbol)]: 7602137,
+  [Symbol(trigger_async_id_symbol)]: 7602129,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/ix',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: ix
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'IX' } }
+DEBUG: Total schedules count: 1
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 3324ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel 200 in 3326ms
+DEBUG: Fetched schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-13T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-13T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    className: 'IX - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/ix?page=1&pageSize=100 200 in 5042ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'lkg' },
+  className: 'lkg',
+  [Symbol(async_id_symbol)]: 7661805,
+  [Symbol(trigger_async_id_symbol)]: 7661797,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/lkg',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: lkg
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'LKG' } }
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 1,
+    classSubjectId: 109,
+    classId: 17,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-03T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-01',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 1,
+    classSubjectId: 109,
+    classId: 17,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-03T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-01',
+    className: 'LKG - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/lkg?page=1&pageSize=100 200 in 3611ms
+ GET /api-schools-panel/MonthlyAdmitCards/lkg/admit-cards?className=LKG&page=1&pageSize=10&searchQuery= 200 in 3613ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/201 200 in 3114ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/212 200 in 1538ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'lkg' },
+  className: 'lkg',
+  [Symbol(async_id_symbol)]: 7719869,
+  [Symbol(trigger_async_id_symbol)]: 7719861,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/lkg',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: lkg
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'LKG' } }
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 1,
+    classSubjectId: 109,
+    classId: 17,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-03T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-01',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 1,
+    classSubjectId: 109,
+    classId: 17,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-03T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-01',
+    className: 'LKG - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/lkg?page=1&pageSize=100 200 in 2308ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'x' },
+  className: 'x',
+  [Symbol(async_id_symbol)]: 7759962,
+  [Symbol(trigger_async_id_symbol)]: 7759954,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/x',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: x
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'X' } }
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 12,
+    classSubjectId: 183,
+    classId: 28,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-14T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-12',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 12,
+    classSubjectId: 183,
+    classId: 28,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-14T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-12',
+    className: 'X - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/MonthlyAdmitCards/x/admit-cards?className=X&page=1&pageSize=10&searchQuery= 200 in 2291ms
+ GET /api-schools-panel/semester-exam-schedules/x?page=1&pageSize=100 200 in 2293ms
+ GET /api-schools-panel/MonthlyAdmitCards/x/admit-cards/470 200 in 1230ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'vi' },
+  className: 'vi',
+  [Symbol(async_id_symbol)]: 7825947,
+  [Symbol(trigger_async_id_symbol)]: 7825939,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/vi',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: vi
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'VI' } }
+DEBUG: Total schedules count: 1
+ GET /api-schools-panel/MonthlyAdmitCards/vi/admit-cards?className=VI&page=1&pageSize=10&searchQuery= 200 in 1906ms
+DEBUG: Fetched schedules: [
+  {
+    id: 8,
+    classSubjectId: 151,
+    classId: 24,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-10T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-08',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 8,
+    classSubjectId: 151,
+    classId: 24,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-10T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-08',
+    className: 'VI - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/vi?page=1&pageSize=100 200 in 3161ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'ix' },
+  className: 'ix',
+  [Symbol(async_id_symbol)]: 7868415,
+  [Symbol(trigger_async_id_symbol)]: 7868407,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/ix',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: ix
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'IX' } }
+DEBUG: Total schedules count: 1
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards?className=IX&page=1&pageSize=10&searchQuery= 200 in 3307ms
+DEBUG: Fetched schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-13T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-13T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    className: 'IX - A',
+    subjectName: 'English'
+  }
+]
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/ix?page=1&pageSize=100 200 in 5786ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/455 200 in 1504ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/453 200 in 1505ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards?className=IX&page=1&pageSize=10&searchQuery=n 200 in 6733ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/455 200 in 1213ms
+ GET /knights-faculties-panel/sure-success-point-school-management-panel?page=2 200 in 650ms
+DEBUG: Handling GET /api/semester-exam-schedules/[className] request...
+DEBUG: Full params object: Promise {
+  { className: 'ix' },
+  className: 'ix',
+  [Symbol(async_id_symbol)]: 8022183,
+  [Symbol(trigger_async_id_symbol)]: 8022175,
+  [Symbol(kResourceStore)]: { isAppRoute: true, isAction: false },
+  [Symbol(kResourceStore)]: {
+    isStaticGeneration: false,
+    page: '/api-schools-panel/semester-exam-schedules/[className]/route',
+    route: '/api-schools-panel/semester-exam-schedules/[className]',
+    incrementalCache: IncrementalCache {
+      locks: Map(0) {},
+      hasCustomCacheHandler: false,
+      dev: true,
+      disableForTestmode: false,
+      minimalMode: false,
+      requestHeaders: [Object],
+      allowedRevalidateHeaderKeys: undefined,
+      prerenderManifest: [Object],
+      cacheControls: [SharedCacheControls],
+      fetchCacheKeyPrefix: '',
+      cacheHandler: [FileSystemCache]
+    },
+    cacheLifeProfiles: {
+      default: [Object],
+      seconds: [Object],
+      minutes: [Object],
+      hours: [Object],
+      days: [Object],
+      weeks: [Object],
+      max: [Object]
+    },
+    isRevalidate: false,
+    isBuildTimePrerendering: undefined,
+    hasReadableErrorStacks: undefined,
+    fetchCache: undefined,
+    isOnDemandRevalidate: undefined,
+    isDraftMode: undefined,
+    isPrefetchRequest: undefined,
+    buildId: 'development',
+    reactLoadableManifest: {},
+    assetPrefix: '',
+    afterContext: AfterContext {
+      workUnitStores: Set(0) {},
+      waitUntil: [Function (anonymous)],
+      onClose: [Function: onClose],
+      onTaskError: undefined,
+      callbackQueue: [EventEmitter]
+    },
+    cacheComponentsEnabled: false,
+    dev: false,
+    previouslyRevalidatedTags: [],
+    refreshTagsByCacheKind: Map(2) { 'default' => [Object], 'remote' => [Object] },
+    runInCleanSnapshot: [Function: bound] { asyncResource: [Getter/Setter] },
+    shouldTrackFetchMetrics: false
+  },
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: undefined,
+  [Symbol(kResourceStore)]: {
+    type: 'request',
+    phase: 'action',
+    implicitTags: { tags: [Array], expirationsByCacheKind: [Map] },
+    url: {
+      pathname: '/api-schools-panel/semester-exam-schedules/ix',
+      search: '?page=1&pageSize=100'
+    },
+    rootParams: {},
+    headers: [Getter],
+    cookies: [Getter/Setter],
+    mutableCookies: [Getter],
+    userspaceMutableCookies: [Getter],
+    draftMode: [Getter],
+    renderResumeDataCache: null,
+    isHmrRefresh: false,
+    serverComponentsHmrCache: undefined,
+    devFallbackParams: null
+  }
+}
+Error: Route "/api-schools-panel/semester-exam-schedules/[className]" used `params.className`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at GET (src\app\api-schools-panel\semester-exam-schedules\[className]\route.js:9:13)
+   7 |
+   8 |   try {
+>  9 |     const { className } = params;
+     |             ^
+  10 |     console.log("DEBUG: ClassName from params:", className);
+  11 |
+  12 |     // Validate className
+DEBUG: ClassName from params: ix
+DEBUG: Query parameters: { page: 1, pageSize: 100 }
+DEBUG: Prisma query where clause: { class: { name: 'IX' } }
+DEBUG: Total schedules count: 1
+DEBUG: Fetched schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: 2026-11-13T00:00:00.000Z,
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    classSubject: { class: [Object], subject: [Object] }
+  }
+]
+DEBUG: Formatted schedules: [
+  {
+    id: 11,
+    classSubjectId: 175,
+    classId: 27,
+    subjectId: 1,
+    branchId: undefined,
+    schoolId: 1,
+    semester: 'SEMESTER_I',
+    examDate: '2026-11-13T00:00:00.000Z',
+    durationMinutes: 90,
+    examHall: 'TRAIN-11',
+    className: 'IX - A',
+    subjectName: 'English'
+  }
+]
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards?className=IX&page=2&pageSize=10&searchQuery=n 200 in 2362ms
+DEBUG: Disconnecting Prisma client...
+ GET /api-schools-panel/semester-exam-schedules/ix?page=1&pageSize=100 200 in 3381ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards?className=IX&page=2&pageSize=10&searchQuery=n 200 in 1551ms
+ GET /api-schools-panel/MonthlyAdmitCards/ix/admit-cards/203 200 in 1263ms
+ ○ Compiling /api/student-lifecycle/students/[id]/photo ...
+ ✓ Compiled /api/student-lifecycle/students/[id]/photo in 9.3s (2725 modules)
+ GET /api/student-lifecycle/students/203/photo 403 in 11258ms

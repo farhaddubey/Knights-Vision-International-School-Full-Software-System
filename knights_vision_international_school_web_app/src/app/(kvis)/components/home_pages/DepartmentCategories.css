@@ -1,0 +1,7 @@
+/* Ensure the container takes full height */
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+}
+
+/* Optional: Add any additional styles for hover effects or customizations */
